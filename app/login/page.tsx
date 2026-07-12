@@ -1,8 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { authClient } from "@/lib/auth-client";
 import { 
   Eye, 
   EyeOff, 
@@ -15,13 +16,22 @@ import {
 
 export default function LoginPage() {
   const router = useRouter();
+  const { data: session } = authClient.useSession();
+  
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [role, setRole] = useState("dispatcher");
   const [showPassword, setShowPassword] = useState(false);
+  const [rememberMe, setRememberMe] = useState(false);
 
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
+
+  useEffect(() => {
+    if (session) {
+      router.push("/");
+    }
+  }, [session, router]);
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -38,7 +48,7 @@ export default function LoginPage() {
       const res = await fetch("/api/auth/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password, role }),
+        body: JSON.stringify({ email, password, role, rememberMe }),
       });
 
       const data = await res.json();
@@ -141,6 +151,20 @@ export default function LoginPage() {
                 {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
               </button>
             </div>
+          </div>
+
+          {/* Remember Me Toggle */}
+          <div className="flex items-center">
+            <input
+              id="rememberMe"
+              type="checkbox"
+              checked={rememberMe}
+              onChange={(e) => setRememberMe(e.target.checked)}
+              className="h-4 w-4 rounded border-zinc-800 bg-zinc-950/60 text-orange-600 focus:ring-orange-500 focus:ring-offset-zinc-900 focus:outline-none"
+            />
+            <label htmlFor="rememberMe" className="ml-2 block text-xs font-semibold text-zinc-400 cursor-pointer select-none">
+              Remember me
+            </label>
           </div>
 
           {/* Submit Button */}

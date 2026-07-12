@@ -1,14 +1,14 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
-export function middleware(request: NextRequest) {
+export function proxy(request: NextRequest) {
   const sessionToken =
     request.cookies.get("better-auth.session_token")?.value ||
     request.cookies.get("__Secure-better-auth.session_token")?.value;
 
   const { pathname } = request.nextUrl;
 
-  // 1. Allow public routes, auth APIs, and static assets
+  // 1. Allow public routes, auth APIs, and static assets without redirection
   if (
     pathname.startsWith("/login") ||
     pathname.startsWith("/signup") ||
@@ -16,13 +16,6 @@ export function middleware(request: NextRequest) {
     pathname.startsWith("/_next") ||
     pathname === "/favicon.ico"
   ) {
-    // Redirect authenticated users trying to visit login/signup to the homepage
-    if (
-      sessionToken &&
-      (pathname.startsWith("/login") || pathname.startsWith("/signup"))
-    ) {
-      return NextResponse.redirect(new URL("/", request.url));
-    }
     return NextResponse.next();
   }
 

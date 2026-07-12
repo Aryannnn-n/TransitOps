@@ -1,8 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { authClient } from "@/lib/auth-client";
 import { 
   Eye, 
   EyeOff, 
@@ -16,6 +17,8 @@ import {
 
 export default function SignupPage() {
   const router = useRouter();
+  const { data: session } = authClient.useSession();
+
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -26,6 +29,12 @@ export default function SignupPage() {
 
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
+
+  useEffect(() => {
+    if (session) {
+      router.push("/");
+    }
+  }, [session, router]);
   const [success, setSuccess] = useState(false);
 
   async function handleSubmit(e: React.FormEvent) {
