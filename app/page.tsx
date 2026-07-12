@@ -88,8 +88,10 @@ export default async function Home() {
               <p className="text-sm text-zinc-500 mb-4">
                 Initiate and complete dispatch lifecycles under database constraint guards.
               </p>
+              <div>
+                <Link href="/trips">Manage & Dispatch Trips</Link>
+              </div>
             </div>
-            <div className="h-2 w-1/4 bg-zinc-800 rounded-full animate-pulse"></div>
           </div>
         </div>
       </main>
