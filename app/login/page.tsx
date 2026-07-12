@@ -11,7 +11,8 @@ import {
   Lock, 
   ShieldAlert, 
   ArrowRight, 
-  Loader2 
+  Loader2,
+  ShieldCheck
 } from "lucide-react";
 
 export default function LoginPage() {
@@ -20,7 +21,7 @@ export default function LoginPage() {
   
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [role, setRole] = useState("dispatcher");
+  const [role, setRole] = useState("fleet_manager");
   const [showPassword, setShowPassword] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
 
@@ -57,9 +58,7 @@ export default function LoginPage() {
         throw new Error(data.error || "Invalid credentials.");
       }
 
-      // Successful login, redirect to dashboard root
-      router.push("/");
-      router.refresh();
+      window.location.href = "/";
     } catch (err: any) {
       setError(err.message);
     } finally {
@@ -67,129 +66,218 @@ export default function LoginPage() {
     }
   }
 
+  // Quick fill handler for testing
+  const handleQuickFill = (selectedRole: string) => {
+    const roleEmails: Record<string, string> = {
+      fleet_manager: "manager@transitops.com",
+      dispatcher: "dispatcher@transitops.com",
+      safety_officer: "safety@transitops.com",
+      financial_analyst: "finance@transitops.com",
+    };
+    setEmail(roleEmails[selectedRole] || "");
+    setPassword("Password123");
+    setRole(selectedRole);
+  };
+
   return (
-    <div className="flex min-h-screen w-full items-center justify-center bg-zinc-950 p-6 sm:p-10 relative overflow-hidden">
-      {/* Background blur styling for premium aesthetics */}
-      <div className="absolute top-[-20%] left-[-10%] w-[500px] h-[500px] rounded-full bg-orange-600/10 blur-[120px] pointer-events-none" />
-      <div className="absolute bottom-[-20%] right-[-10%] w-[500px] h-[500px] rounded-full bg-amber-600/10 blur-[120px] pointer-events-none" />
-
-      <div className="w-full max-w-md rounded-2xl border border-zinc-800 bg-zinc-900/40 backdrop-blur-xl p-8 shadow-2xl relative z-10">
-        <div className="flex flex-col items-center text-center mb-8">
-          <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-orange-500/10 border border-orange-500/20 text-orange-500 mb-4">
-            <Lock className="h-6 w-6" />
+    <div className="flex min-h-screen w-full bg-white text-zinc-900 font-sans">
+      
+      {/* Left Section */}
+      <section className="hidden md:flex md:w-1/2 bg-zinc-50 border-r border-zinc-200 p-10 flex-col justify-between">
+        
+        {/* Top: Logo and title */}
+        <div className="space-y-3">
+          <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-zinc-900 text-white">
+            <ShieldCheck className="h-6 w-6" />
           </div>
-          <h1 className="text-2xl font-bold tracking-tight text-zinc-50">TransitOps Sign In</h1>
-          <p className="text-sm text-zinc-400 mt-1">Authenticate to access operational dashboard</p>
+          <div>
+            <h1 className="text-xl font-bold tracking-tight text-zinc-900 font-display">TransitOps</h1>
+            <p className="text-xs text-zinc-700 font-medium">Smart Transport Operations Platform</p>
+          </div>
         </div>
 
-        {error && (
-          <div className="mb-6 rounded-lg border border-red-500/20 bg-red-500/10 p-3 text-sm text-red-400 flex items-start gap-2.5">
-            <ShieldAlert className="h-5 w-5 shrink-0 text-red-400 mt-0.5" />
-            <span>{error}</span>
-          </div>
-        )}
+        {/* Center: Main User Roles */}
+        <div className="space-y-4 max-w-sm">
+          <h2 className="text-sm font-bold uppercase tracking-wider text-zinc-500">Our Main User Roles</h2>
+          <ul className="space-y-2 text-sm text-zinc-700 font-medium list-disc pl-4">
+            <li>Fleet Manager</li>
+            <li>Dispatcher</li>
+            <li>Safety Officer</li>
+            <li>Financial Analyst</li>
+          </ul>
+        </div>
 
-        <form onSubmit={handleSubmit} className="space-y-5">
-          {/* Email Address */}
-          <div>
-            <label className="block text-xs font-semibold text-zinc-400 uppercase tracking-wider mb-2">
-              Email Address
-            </label>
-            <div className="relative">
-              <Mail className="absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-zinc-500" />
-              <input
-                type="email"
-                required
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="name@example.com"
-                className="w-full rounded-xl border border-zinc-800 bg-zinc-950/60 pl-11 pr-4 py-3 text-sm text-zinc-100 placeholder-zinc-600 focus:border-orange-500 focus:outline-none focus:ring-1 focus:ring-orange-500 transition-all duration-200"
-              />
+        {/* Bottom Left: Copyright */}
+        <div className="text-xs text-zinc-500 font-medium">
+          &copy; TransitOps
+        </div>
+      </section>
+
+      {/* Right Section - Completely Centered Form */}
+      <section className="flex-1 flex items-center justify-center p-6 sm:p-10 bg-white">
+        
+        <div className="w-full max-w-sm">
+          
+          <div className="w-full rounded-lg border border-zinc-200 bg-white p-8 shadow-sm">
+            
+            {/* Header */}
+            <div className="flex flex-col mb-6">
+              <h2 className="text-2xl font-bold tracking-tight text-zinc-900 font-display">Sign in to your account</h2>
+              <p className="text-xs text-zinc-650 mt-1 font-medium">Enter your credentials to access the platform</p>
             </div>
-          </div>
 
-          {/* Role selection dropdown (verification step) */}
-          <div>
-            <label className="block text-xs font-semibold text-zinc-400 uppercase tracking-wider mb-2">
-              Select Your Permitted Role
-            </label>
-            <select
-              value={role}
-              onChange={(e) => setRole(e.target.value)}
-              className="w-full rounded-xl border border-zinc-800 bg-zinc-950/60 px-4 py-3 text-sm text-zinc-100 focus:border-orange-500 focus:outline-none focus:ring-1 focus:ring-orange-500 transition-all duration-200"
-            >
-              <option value="dispatcher">Dispatcher</option>
-              <option value="fleet_manager">Fleet Manager</option>
-              <option value="safety_officer">Safety Officer</option>
-              <option value="financial_analyst">Financial Analyst</option>
-            </select>
-            <p className="text-[11px] text-zinc-500 mt-1.5 leading-relaxed">
-              * Verification step: Your selected role must match your database permissions.
-            </p>
-          </div>
-
-          {/* Password */}
-          <div>
-            <label className="block text-xs font-semibold text-zinc-400 uppercase tracking-wider mb-2">
-              Password
-            </label>
-            <div className="relative">
-              <Lock className="absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-zinc-500" />
-              <input
-                type={showPassword ? "text" : "password"}
-                required
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                placeholder="••••••••"
-                className="w-full rounded-xl border border-zinc-800 bg-zinc-950/60 pl-11 pr-10 py-3 text-sm text-zinc-100 placeholder-zinc-600 focus:border-orange-500 focus:outline-none focus:ring-1 focus:ring-orange-500 transition-all duration-200"
-              />
-              <button
-                type="button"
-                onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-zinc-500 hover:text-zinc-300 focus:outline-none"
-              >
-                {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
-              </button>
-            </div>
-          </div>
-
-          {/* Remember Me Toggle */}
-          <div className="flex items-center">
-            <input
-              id="rememberMe"
-              type="checkbox"
-              checked={rememberMe}
-              onChange={(e) => setRememberMe(e.target.checked)}
-              className="h-4 w-4 rounded border-zinc-800 bg-zinc-950/60 text-orange-600 focus:ring-orange-500 focus:ring-offset-zinc-900 focus:outline-none"
-            />
-            <label htmlFor="rememberMe" className="ml-2 block text-xs font-semibold text-zinc-400 cursor-pointer select-none">
-              Remember me
-            </label>
-          </div>
-
-          {/* Submit Button */}
-          <button
-            type="submit"
-            disabled={isLoading}
-            className="w-full rounded-xl bg-orange-600 hover:bg-orange-500 text-zinc-50 py-3 font-semibold text-sm transition-all duration-200 flex items-center justify-center gap-2 cursor-pointer shadow-lg shadow-orange-600/10 hover:shadow-orange-600/20 disabled:opacity-50 disabled:cursor-not-allowed"
-          >
-            {isLoading ? (
-              <Loader2 className="h-4 w-4 animate-spin" />
-            ) : (
-              <>
-                Sign In <ArrowRight className="h-4 w-4" />
-              </>
+            {error && (
+              <div className="mb-4 rounded-md border border-red-200 bg-red-50 p-3 text-xs text-red-700 flex items-start gap-2.5">
+                <ShieldAlert className="h-4 w-4 shrink-0 mt-0.5" />
+                <span>{error}</span>
+              </div>
             )}
-          </button>
-        </form>
 
-        <div className="mt-6 text-center text-sm text-zinc-400">
-          Don't have an account?{" "}
-          <Link href="/signup" className="text-orange-500 hover:underline">
-            Sign Up
-          </Link>
+            {/* Form */}
+            <form onSubmit={handleSubmit} className="space-y-4">
+              
+              {/* Email */}
+              <div className="space-y-1.5">
+                <label className="block text-xs font-semibold text-zinc-700">Email Address</label>
+                <div className="relative">
+                  <Mail className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-zinc-400" />
+                  <input
+                    type="email"
+                    required
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder="name@example.com"
+                    className="w-full rounded-md border border-zinc-200 bg-white pl-9 pr-4 py-2 text-sm text-zinc-900 placeholder-zinc-400 focus:border-zinc-900 focus:outline-none transition-colors"
+                  />
+                </div>
+              </div>
+
+              {/* Password */}
+              <div className="space-y-1.5">
+                <label className="block text-xs font-semibold text-zinc-700">Password</label>
+                <div className="relative">
+                  <Lock className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-zinc-400" />
+                  <input
+                    type={showPassword ? "text" : "password"}
+                    required
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    placeholder="••••••••"
+                    className="w-full rounded-md border border-zinc-200 bg-white pl-9 pr-9 py-2 text-sm text-zinc-900 placeholder-zinc-400 focus:border-zinc-900 focus:outline-none transition-colors"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-zinc-400 hover:text-zinc-600"
+                  >
+                    {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                  </button>
+                </div>
+              </div>
+
+              {/* Role Dropdown */}
+              <div className="space-y-1.5">
+                <label className="block text-xs font-semibold text-zinc-700">Role</label>
+                <select
+                  value={role}
+                  onChange={(e) => setRole(e.target.value)}
+                  className="w-full rounded-md border border-zinc-200 bg-white px-3 py-2 text-sm text-zinc-900 focus:border-zinc-900 focus:outline-none transition-colors"
+                >
+                  <option value="fleet_manager">Fleet Manager</option>
+                  <option value="dispatcher">Dispatcher</option>
+                  <option value="safety_officer">Safety Officer</option>
+                  <option value="financial_analyst">Financial Analyst</option>
+                </select>
+              </div>
+
+              {/* Remember me & Forgot Password */}
+              <div className="flex items-center justify-between pt-1">
+                <label className="flex items-center gap-2 text-xs text-zinc-600 font-semibold cursor-pointer select-none">
+                  <input
+                    type="checkbox"
+                    checked={rememberMe}
+                    onChange={(e) => setRememberMe(e.target.checked)}
+                    className="h-4 w-4 rounded border-zinc-200 bg-white text-zinc-900 focus:ring-0 focus:outline-none"
+                  />
+                  <span>Remember me</span>
+                </label>
+                {/* <Link href="#" className="text-xs text-zinc-700 hover:text-zinc-900 font-semibold underline">
+                  Forgot Password?
+                </Link> */}
+              </div>
+
+              {/* Sign In Button */}
+              <button
+                type="submit"
+                disabled={isLoading}
+                className="w-full rounded-md bg-zinc-900 hover:bg-zinc-800 text-white py-2 font-semibold text-sm transition-colors flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
+              >
+                {isLoading ? (
+                  <Loader2 className="h-4 w-4 animate-spin" />
+                ) : (
+                  <>
+                    Sign In <ArrowRight className="h-4 w-4" />
+                  </>
+                )}
+              </button>
+
+            </form>
+
+            <div className="mt-4 text-center text-xs text-zinc-600 font-medium">
+              Don't have an account?{" "}
+              <Link href="/signup" className="text-zinc-900 font-bold hover:underline">
+                Sign Up
+              </Link>
+            </div>
+
+            {/* Quick Fill Dev Buttons */}
+            <div className="mt-6 pt-6 border-t border-zinc-200 space-y-2.5">
+              <div className="text-[10px] font-bold text-zinc-500 uppercase tracking-wider text-center">
+                Test Credentials
+              </div>
+              <div className="grid grid-cols-2 gap-2">
+                <button
+                  type="button"
+                  onClick={() => handleQuickFill("fleet_manager")}
+                  className="px-2 py-1.5 rounded border border-zinc-200 bg-zinc-50 hover:bg-zinc-100 text-[10px] font-bold text-zinc-800 transition-colors cursor-pointer text-center"
+                >
+                  Fleet Manager
+                </button>
+                <button
+                  type="button"
+                  onClick={() => handleQuickFill("dispatcher")}
+                  className="px-2 py-1.5 rounded border border-zinc-200 bg-zinc-50 hover:bg-zinc-100 text-[10px] font-bold text-zinc-800 transition-colors cursor-pointer text-center"
+                >
+                  Dispatcher
+                </button>
+                <button
+                  type="button"
+                  onClick={() => handleQuickFill("safety_officer")}
+                  className="px-2 py-1.5 rounded border border-zinc-200 bg-zinc-50 hover:bg-zinc-100 text-[10px] font-bold text-zinc-800 transition-colors cursor-pointer text-center"
+                >
+                  Safety Officer
+                </button>
+                <button
+                  type="button"
+                  onClick={() => handleQuickFill("financial_analyst")}
+                  className="px-2 py-1.5 rounded border border-zinc-200 bg-zinc-50 hover:bg-zinc-100 text-[10px] font-bold text-zinc-800 transition-colors cursor-pointer text-center"
+                >
+                  Financial Analyst
+                </button>
+              </div>
+            </div>
+
+            {/* Informational Text */}
+            <p className="text-[10px] text-zinc-400 mt-4 text-center leading-relaxed font-medium">
+              Note: Your selected role must match the database role to authenticate.
+            </p>
+
+          </div>
+
         </div>
-      </div>
+
+      </section>
+
     </div>
   );
 }

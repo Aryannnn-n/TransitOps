@@ -1,8 +1,5 @@
 import { getServerSession } from "@/lib/session";
-import { LogoutButton } from "@/components/LogoutButton";
-import { ShieldCheck, User, Mail, UserCheck } from "lucide-react";
 import { redirect } from "next/navigation";
-import Link from "next/link";
 import { db } from "@/lib/db";
 import { vehicles, drivers, trips, fuelLogs } from "@/lib/schema";
 import { DashboardFilters } from "@/components/DashboardFilters";
@@ -14,12 +11,10 @@ interface PageProps {
 export default async function Home({ searchParams }: PageProps) {
   const session = await getServerSession();
 
-  // Guard: If no session, redirect to login
   if (!session) {
     redirect("/login");
   }
 
-  const { user } = session;
   const params = await searchParams;
   const typeFilter = params.type;
   const statusFilter = params.status;
@@ -71,27 +66,13 @@ export default async function Home({ searchParams }: PageProps) {
   // Fleet Utilization % (Active / Total)
   const fleetUtilization = totalVehicles > 0 ? Math.round((activeVehicles / totalVehicles) * 100) : 0;
 
-  // 5. Generate Chart Representations (Progress bars/Text charts)
-  // Vehicle Status chart data
+  // 5. Vehicle Status Counts
   const statusCounts = {
     available: filteredVehicles.filter((v) => v.status === "available").length,
     on_trip: filteredVehicles.filter((v) => v.status === "on_trip").length,
     in_shop: filteredVehicles.filter((v) => v.status === "in_shop").length,
     retired: filteredVehicles.filter((v) => v.status === "retired").length,
   };
-
-  // Monthly Fuel Expense chart data
-  const monthlyFuelMap: { [month: string]: number } = {};
-  // Only count fuel logs for vehicles matching current filters
-  const filteredFuelLogs = fuelLogsList.filter((f) => f.vehicleId ? filteredVehicleIds.has(f.vehicleId) : false);
-  filteredFuelLogs.forEach((f) => {
-    const month = new Date(f.date).toLocaleString("default", { month: "short", year: "numeric" });
-    monthlyFuelMap[month] = (monthlyFuelMap[month] || 0) + Number(f.cost);
-  });
-  const monthlyFuelExpense = Object.entries(monthlyFuelMap).map(([month, cost]) => ({
-    month,
-    cost,
-  }));
 
   // 6. Recent Trips (trips joined with vehicle/driver information)
   const recentTripsDetailed = filteredTrips
@@ -103,235 +84,160 @@ export default async function Home({ searchParams }: PageProps) {
         source: trip.source,
         destination: trip.destination,
         status: trip.status,
-        plannedDistanceKm: trip.plannedDistanceKm,
         vehicleReg: v ? v.registrationNumber : "N/A",
-        vehicleName: v ? v.name : "N/A",
         driverName: d ? d.name : "N/A",
-        startedAt: trip.startedAt,
       };
     })
     .slice(0, 10); // show top 10
 
   return (
-    <div className="flex min-h-screen w-full flex-col bg-zinc-950 p-6 sm:p-10 relative overflow-hidden">
-      {/* Background blurs for premium look */}
-      <div className="absolute top-[-20%] left-[-10%] w-[500px] h-[500px] rounded-full bg-orange-600/5 blur-[120px] pointer-events-none" />
-      <div className="absolute bottom-[-20%] right-[-10%] w-[500px] h-[500px] rounded-full bg-amber-600/5 blur-[120px] pointer-events-none" />
+    <div className="space-y-6">
+      
+      {/* Top Title/Header */}
+      <div>
+        <h2 className="text-xl font-bold tracking-tight text-zinc-900 font-display">Dashboard</h2>
+        <p className="text-xs text-zinc-500 font-medium">Real-time status overview of vehicles, drivers, and trips.</p>
+      </div>
 
-      {/* Navigation Header */}
-      <header className="flex w-full items-center justify-between border-b border-zinc-800 pb-5 z-10">
-        <div className="flex items-center gap-3">
-          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-orange-500/10 border border-orange-500/20 text-orange-500">
-            <ShieldCheck className="h-5 w-5" />
-          </div>
+      {/* Row 1: Filters */}
+      <DashboardFilters 
+        regions={uniqueRegions} 
+        types={uniqueTypes} 
+        statuses={uniqueStatuses} 
+      />
+
+      {/* Row 2: KPI Cards */}
+      <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-4">
+        
+        {/* Card 1: Active Vehicles */}
+        <div className="bg-zinc-50 border border-zinc-200 p-4 rounded-lg shadow-sm">
+          <div className="text-[10px] font-bold text-zinc-500 uppercase tracking-wider">Active Vehicles</div>
+          <div className="text-xl font-bold text-zinc-900 mt-1">{activeVehicles}</div>
+        </div>
+
+        {/* Card 2: Available Vehicles */}
+        <div className="bg-zinc-50 border border-zinc-200 p-4 rounded-lg shadow-sm">
+          <div className="text-[10px] font-bold text-zinc-500 uppercase tracking-wider">Available Vehicles</div>
+          <div className="text-xl font-bold text-zinc-900 mt-1">{availableVehicles}</div>
+        </div>
+
+        {/* Card 3: Vehicles in Maintenance */}
+        <div className="bg-zinc-50 border border-zinc-200 p-4 rounded-lg shadow-sm">
+          <div className="text-[10px] font-bold text-zinc-500 uppercase tracking-wider">In Maintenance</div>
+          <div className="text-xl font-bold text-zinc-900 mt-1">{inShopVehicles}</div>
+        </div>
+
+        {/* Card 4: Active Trips */}
+        <div className="bg-zinc-50 border border-zinc-200 p-4 rounded-lg shadow-sm">
+          <div className="text-[10px] font-bold text-zinc-500 uppercase tracking-wider">Active Trips</div>
+          <div className="text-xl font-bold text-zinc-900 mt-1">{activeTrips}</div>
+        </div>
+
+        {/* Card 5: Pending Trips */}
+        <div className="bg-zinc-50 border border-zinc-200 p-4 rounded-lg shadow-sm">
+          <div className="text-[10px] font-bold text-zinc-500 uppercase tracking-wider">Pending Trips</div>
+          <div className="text-xl font-bold text-zinc-900 mt-1">{pendingTrips}</div>
+        </div>
+
+        {/* Card 6: Drivers On Duty */}
+        <div className="bg-zinc-50 border border-zinc-200 p-4 rounded-lg shadow-sm">
+          <div className="text-[10px] font-bold text-zinc-500 uppercase tracking-wider">Drivers On Duty</div>
+          <div className="text-xl font-bold text-zinc-900 mt-1">{driversOnDuty}</div>
+        </div>
+
+        {/* Card 7: Fleet Utilization */}
+        <div className="bg-zinc-50 border border-zinc-200 p-4 rounded-lg shadow-sm flex flex-col justify-between">
           <div>
-            <h1 className="text-lg font-bold tracking-tight text-zinc-50">TransitOps</h1>
-            <p className="text-xs text-zinc-500">Fleet Operations Management</p>
+            <div className="text-[10px] font-bold text-zinc-500 uppercase tracking-wider">Fleet Utilization</div>
+            <div className="text-xl font-bold text-zinc-900 mt-1">{fleetUtilization}%</div>
+          </div>
+          <div className="w-full bg-zinc-200 rounded-full h-1.5 overflow-hidden mt-2">
+            <div className="bg-zinc-950 h-full rounded-full" style={{ width: `${fleetUtilization}%` }} />
           </div>
         </div>
-        <LogoutButton />
-      </header>
 
-      {/* Main Content Area */}
-      <main className="flex-1 w-full flex flex-col gap-6 py-8 z-10">
-        {/* Navigation Links panel */}
-        <div>
-          <span><strong>Navigation:</strong></span>
+      </div>
+
+      {/* Row 3: Split Section */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        
+        {/* Left Section: Recent Trips Table */}
+        <div className="lg:col-span-2 rounded-lg border border-zinc-200 bg-white p-5 shadow-sm space-y-4">
+          <h3 className="text-xs font-bold text-zinc-500 uppercase tracking-wider">Recent Trips</h3>
           
-          {user.role === "fleet_manager" && (
-            <>
-              {" | "}
-              <Link href="/vehicles">Manage Vehicles</Link>
-              {" | "}
-              <Link href="/maintenance">Workshop & Maintenance</Link>
-            </>
-          )}
-
-          {user.role === "dispatcher" && (
-            <>
-              {" | "}
-              <Link href="/trips">Manage & Dispatch Trips</Link>
-            </>
-          )}
-
-          {user.role === "safety_officer" && (
-            <>
-              {" | "}
-              <Link href="/drivers">Manage Drivers</Link>
-            </>
-          )}
-
-          {user.role === "financial_analyst" && (
-            <>
-              {" | "}
-              <Link href="/expenses">Fuel & Expenses</Link>
-              {" | "}
-              <Link href="/settings">Settings</Link>
-              {" | "}
-              <Link href="/analytics"><strong>Analytics Hub (P2)</strong></Link>
-            </>
-          )}
-        </div>
-
-        {/* Dashboard Filters (Dynamic) */}
-        <DashboardFilters 
-          regions={uniqueRegions} 
-          types={uniqueTypes} 
-          statuses={uniqueStatuses} 
-        />
-
-        {/* Real-time KPI Cards */}
-        <div>
-          <h3>Operational KPIs</h3>
-          <table border={1} cellPadding={10}>
-            <tbody>
-              <tr>
-                <td>
-                  <strong>Active Vehicles</strong><br />
-                  {activeVehicles}
-                </td>
-                <td>
-                  <strong>Available Vehicles</strong><br />
-                  {availableVehicles}
-                </td>
-                <td>
-                  <strong>Vehicles In Shop</strong><br />
-                  {inShopVehicles}
-                </td>
-                <td>
-                  <strong>Active Trips</strong><br />
-                  {activeTrips}
-                </td>
-                <td>
-                  <strong>Pending Trips</strong><br />
-                  {pendingTrips}
-                </td>
-                <td>
-                  <strong>Drivers On Duty</strong><br />
-                  {driversOnDuty}
-                </td>
-                <td>
-                  <strong>Fleet Utilization %</strong><br />
-                  {fleetUtilization}%
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-
-        {/* Dashboard Charts */}
-        <div>
-          <h3>Visual Chart Metrics</h3>
-          <div>
-            <h4>Vehicle Status Distribution</h4>
-            <ul>
-              {Object.entries(statusCounts).map(([status, count]) => {
-                const pct = totalVehicles > 0 ? Math.round((count / totalVehicles) * 100) : 0;
-                const bar = "=".repeat(Math.round(pct / 10)) + " ".repeat(10 - Math.round(pct / 10));
-                return (
-                  <li key={status}>
-                    <strong>{status.replace("_", " ")}:</strong> {count} vehicles <code>[{bar}] {pct}%</code>
-                  </li>
-                );
-              })}
-            </ul>
-          </div>
-
-          <div>
-            <h4>Fleet Utilization Rate</h4>
-            <p>
-              <strong>Active vs Total:</strong> {activeVehicles} / {totalVehicles} active vehicles
-            </p>
-            <code>
-              [{"=".repeat(Math.round(fleetUtilization / 10)) + " ".repeat(10 - Math.round(fleetUtilization / 10))}] {fleetUtilization}%
-            </code>
-          </div>
-
-          <div>
-            <h4>Monthly Fuel Expenses</h4>
-            {monthlyFuelExpense.length === 0 ? (
-              <p>No fuel expenses logged yet.</p>
-            ) : (
-              <ul>
-                {monthlyFuelExpense.map((m) => {
-                  const maxCost = Math.max(...monthlyFuelExpense.map((item) => item.cost)) || 1;
-                  const pct = Math.round((m.cost / maxCost) * 100);
-                  const bar = "=".repeat(Math.round(pct / 10)) + " ".repeat(10 - Math.round(pct / 10));
-                  return (
-                    <li key={m.month}>
-                      <strong>{m.month}:</strong> INR {m.cost.toLocaleString()} <code>[{bar}] {pct}%</code>
-                    </li>
-                  );
-                })}
-              </ul>
-            )}
-          </div>
-        </div>
-
-        {/* Recent Trips Table */}
-        <div>
-          <h3>Recent Trips (Top 10)</h3>
           {recentTripsDetailed.length === 0 ? (
-            <p>No trips registered.</p>
+            <div className="text-center py-10 text-xs text-zinc-500">
+              No recent trips recorded.
+            </div>
           ) : (
-            <table border={1} cellPadding={5}>
-              <thead>
-                <tr>
-                  <th>Trip ID</th>
-                  <th>Route</th>
-                  <th>Vehicle</th>
-                  <th>Driver</th>
-                  <th>Status</th>
-                  <th>Distance</th>
-                  <th>Started At</th>
-                </tr>
-              </thead>
-              <tbody>
-                {recentTripsDetailed.map((t) => (
-                  <tr key={t.id}>
-                    <td>#{t.id.slice(0, 8)}</td>
-                    <td>From: {t.source} To: {t.destination}</td>
-                    <td>{t.vehicleReg} ({t.vehicleName})</td>
-                    <td>{t.driverName}</td>
-                    <td>{t.status}</td>
-                    <td>{t.plannedDistanceKm} km</td>
-                    <td>{t.startedAt ? new Date(t.startedAt).toLocaleString() : "N/A"}</td>
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-xs border-collapse">
+                <thead>
+                  <tr className="border-b border-zinc-200 text-zinc-500 font-bold uppercase tracking-wider bg-zinc-50/50">
+                    <th className="px-4 py-3">Trip ID</th>
+                    <th className="px-4 py-3">Vehicle</th>
+                    <th className="px-4 py-3">Driver</th>
+                    <th className="px-4 py-3 text-center">Status</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody className="divide-y divide-zinc-200">
+                  {recentTripsDetailed.map((t) => {
+                    let statusBadge = "bg-zinc-100 text-zinc-700 border-zinc-200";
+                    if (t.status === "dispatched") statusBadge = "bg-blue-50 text-blue-700 border-blue-200";
+                    if (t.status === "completed") statusBadge = "bg-emerald-50 text-emerald-700 border-emerald-200";
+                    if (t.status === "cancelled") statusBadge = "bg-red-50 text-red-700 border-red-200";
+
+                    return (
+                      <tr key={t.id} className="hover:bg-zinc-50/50 transition-colors">
+                        <td className="px-4 py-3 font-mono font-semibold text-zinc-900">#{t.id.slice(0, 8)}</td>
+                        <td className="px-4 py-3">
+                          <span className="font-semibold text-zinc-900">{t.vehicleReg}</span>
+                        </td>
+                        <td className="px-4 py-3 text-zinc-600 font-medium">{t.driverName}</td>
+                        <td className="px-4 py-3 text-center">
+                          <span className={`inline-flex items-center rounded-md px-2 py-0.5 text-[10px] font-bold border capitalize ${statusBadge}`}>
+                            {t.status}
+                          </span>
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </div>
           )}
         </div>
 
-        {/* User Card */}
-        <section className="rounded-2xl border border-zinc-800 bg-zinc-900/40 backdrop-blur-xl p-6 max-w-xl">
-          <h2 className="text-sm font-semibold uppercase tracking-wider text-zinc-400 mb-4">
-            Active Session Credentials
-          </h2>
+        {/* Right Section: Vehicle Status Panel */}
+        <div className="rounded-lg border border-zinc-200 bg-white p-5 shadow-sm space-y-4">
+          <h3 className="text-xs font-bold text-zinc-500 uppercase tracking-wider">Vehicle Status Panel</h3>
           
-          <div className="space-y-4">
-            <div className="flex items-center gap-3 text-zinc-200">
-              <User className="h-4 w-4 text-zinc-500" />
-              <span className="text-sm font-medium">Name:</span>
-              <span className="text-sm text-zinc-400">{user.name}</span>
-            </div>
+          <div className="space-y-4 pt-2">
+            {Object.entries(statusCounts).map(([status, count]) => {
+              const pct = totalVehicles > 0 ? Math.round((count / totalVehicles) * 100) : 0;
+              
+              let progressColor = "bg-zinc-500";
+              if (status === "available") progressColor = "bg-emerald-500";
+              if (status === "on_trip") progressColor = "bg-blue-500";
+              if (status === "in_shop") progressColor = "bg-amber-500";
 
-            <div className="flex items-center gap-3 text-zinc-200">
-              <Mail className="h-4 w-4 text-zinc-500" />
-              <span className="text-sm font-medium">Email:</span>
-              <span className="text-sm text-zinc-400">{user.email}</span>
-            </div>
-
-            <div className="flex items-center gap-3 text-zinc-200">
-              <UserCheck className="h-4 w-4 text-orange-500" />
-              <span className="text-sm font-medium">Role:</span>
-              <span className="inline-flex items-center rounded-md bg-orange-500/10 px-2 py-1 text-xs font-medium text-orange-400 ring-1 ring-inset ring-orange-500/20 capitalize">
-                {user.role.replace("_", " ")}
-              </span>
-            </div>
+              return (
+                <div key={status} className="space-y-1">
+                  <div className="flex justify-between text-xs font-semibold">
+                    <span className="capitalize text-zinc-700">{status.replace("_", " ")}</span>
+                    <span className="text-zinc-900">{count} <span className="text-zinc-400 font-medium">({pct}%)</span></span>
+                  </div>
+                  <div className="w-full bg-zinc-100 rounded-full h-2 overflow-hidden border border-zinc-200">
+                    <div className={`h-full rounded-full ${progressColor}`} style={{ width: `${pct}%` }} />
+                  </div>
+                </div>
+              );
+            })}
           </div>
-        </section>
-      </main>
+        </div>
+
+      </div>
+
     </div>
   );
 }
