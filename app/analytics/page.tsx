@@ -142,116 +142,157 @@ export default async function AnalyticsPage() {
   ];
 
   return (
-    <div>
-      <div>
-        <Link href="/">Back to Dashboard</Link>
-      </div>
-
-      <h1>Analytics Hub</h1>
-
-      {/* Analytics KPI Cards */}
-      <div>
-        <h3>Key Performance Indicators</h3>
-        <ul>
-          <li>
-            <strong>Average Fuel Efficiency:</strong> {averageFuelEfficiency} km/l
-          </li>
-          <li>
-            <strong>Fleet Utilization %:</strong> {fleetUtilizationPct}% (Active: {activeVehiclesCount} / Total: {totalVehiclesCount})
-          </li>
-          <li>
-            <strong>Total Operational Cost:</strong> {orgSettings?.currency || "INR"} {totalOperationalCost.toLocaleString()} (Fuel: {totalFuelCost.toLocaleString()} | Maintenance: {totalMaintenanceCost.toLocaleString()})
-          </li>
-          <li>
-            <strong>Fleet Overall ROI:</strong> {overallROI}
-          </li>
-        </ul>
-      </div>
-
-      <hr />
-
-      {/* CSV Export */}
-      <div>
-        <h3>Export Vehicle Statistics</h3>
-        <ExportCSVButton 
-          data={vehicleStats} 
-          filename="vehicle_analytics.csv" 
-          headers={csvHeaders} 
-        />
-      </div>
-
-      <hr />
-
-      {/* Analytics Lists / Visual Progress Representation */}
-      <div>
-        <h3>Top Cost Vehicles (Fuel + Maintenance)</h3>
-        {topCostVehicles.map((v) => {
-          const maxCost = topCostVehicles[0]?.operationalCost || 1;
-          const pct = Math.round((v.operationalCost / maxCost) * 100);
-          const bar = "=".repeat(Math.round(pct / 10)) + " ".repeat(10 - Math.round(pct / 10));
-          return (
-            <div key={v.id}>
-              <p>
-                <strong>{v.name} ({v.registrationNumber}):</strong> {orgSettings?.currency || "INR"} {v.operationalCost.toLocaleString()}<br />
-                <code>[{bar}] {pct}% of max</code>
-              </p>
+    <div className="min-h-screen bg-white text-zinc-900 p-6 sm:p-10">
+      <div className="max-w-6xl mx-auto space-y-8">
+        
+        {/* Breadcrumbs / Header */}
+        <header className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+          <div className="space-y-1.5">
+            <div className="text-sm text-zinc-700 font-bold">
+              <Link href="/" className="hover:text-zinc-950 transition-colors">Dashboard</Link>
+              <span className="mx-2">/</span>
+              <span className="text-zinc-900">Analytics Hub</span>
             </div>
-          );
-        })}
-      </div>
+            <h1 className="text-2xl font-bold tracking-tight text-zinc-900 font-display">Analytics Hub</h1>
+          </div>
 
-      <hr />
+          <div>
+            <ExportCSVButton 
+              data={vehicleStats} 
+              filename="vehicle_analytics.csv" 
+              headers={csvHeaders} 
+            />
+          </div>
+        </header>
 
-      <div>
-        <h3>Monthly Operational Expense Breakdown</h3>
-        {monthlyExpenses.map((m) => {
-          return (
-            <div key={m.month}>
-              <p>
-                <strong>{m.month}:</strong> Total: {orgSettings?.currency || "INR"} {m.total.toLocaleString()} 
-                (Fuel: {m.fuel.toLocaleString()} | Maintenance: {m.maintenance.toLocaleString()})
-              </p>
+        {/* Analytics KPI Cards */}
+        <section className="space-y-4">
+          <h3 className="text-xs font-bold text-zinc-500 uppercase tracking-wider">Fleet Performance Indicators</h3>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            
+            <div className="rounded-xl border border-zinc-200 bg-white p-5 shadow-sm space-y-1">
+              <div className="text-xs font-bold text-zinc-650 uppercase tracking-wider">Average Fuel Efficiency</div>
+              <div className="text-2xl font-bold text-zinc-900 font-display">{averageFuelEfficiency} <span className="text-sm font-semibold text-zinc-700">km/L</span></div>
             </div>
-          );
-        })}
-      </div>
 
-      <hr />
+            <div className="rounded-xl border border-zinc-200 bg-white p-5 shadow-sm space-y-1">
+              <div className="text-xs font-bold text-zinc-650 uppercase tracking-wider">Fleet Utilization</div>
+              <div className="text-2xl font-bold text-emerald-700 font-display">{fleetUtilizationPct}%</div>
+              <div className="text-[11px] text-zinc-800 font-bold">{activeVehiclesCount} of {totalVehiclesCount} active assets</div>
+            </div>
 
-      <div>
-        <h3>Vehicle Fleet Details</h3>
-        <table border={1} cellPadding={5}>
-          <thead>
-            <tr>
-              <th>Reg Number</th>
-              <th>Vehicle Name</th>
-              <th>Distance (km)</th>
-              <th>Fuel Liters</th>
-              <th>Efficiency (km/l)</th>
-              <th>Fuel Cost</th>
-              <th>Maint Cost</th>
-              <th>Oper Cost</th>
-              <th>Revenue</th>
-              <th>ROI</th>
-            </tr>
-          </thead>
-          <tbody>
-            {vehicleStats.map((v) => (
-              <tr key={v.id}>
-                <td>{v.registrationNumber}</td>
-                <td>{v.name}</td>
-                <td>{v.totalDistance}</td>
-                <td>{v.totalFuelLiters}</td>
-                <td>{v.fuelEfficiency}</td>
-                <td>{v.totalFuelCost}</td>
-                <td>{v.totalMaintenanceCost}</td>
-                <td>{v.operationalCost}</td>
-                <td>{v.revenue}</td>
-                <td>{v.roiPercent}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+            <div className="rounded-xl border border-zinc-200 bg-white p-5 shadow-sm space-y-1">
+              <div className="text-xs font-bold text-zinc-650 uppercase tracking-wider">Total Operational Cost</div>
+              <div className="text-2xl font-bold text-zinc-900 font-display">{orgSettings?.currency || "INR"} {totalOperationalCost.toLocaleString()}</div>
+              <div className="text-[11px] text-zinc-800 font-bold">Fuel: {totalFuelCost.toLocaleString()} | Maint: {totalMaintenanceCost.toLocaleString()}</div>
+            </div>
+
+            <div className="rounded-xl border border-orange-200 bg-orange-50/50 p-5 shadow-sm space-y-1">
+              <div className="text-xs font-bold text-orange-800 uppercase tracking-wider">Fleet Overall ROI</div>
+              <div className="text-2xl font-bold text-orange-600 font-display">{overallROI}</div>
+              <div className="text-[11px] text-orange-850 font-bold">Calculated over acquisition cost</div>
+            </div>
+
+          </div>
+        </section>
+
+        {/* Cost Analysis Breakdown Row */}
+        <section className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          
+          {/* Top Cost Vehicles */}
+          <div className="rounded-xl border border-zinc-200 bg-white p-6 shadow-sm space-y-4">
+            <h3 className="text-sm font-bold text-zinc-900 uppercase tracking-wider">Top 5 Highest-Expense Vehicles</h3>
+            <div className="space-y-4">
+              {topCostVehicles.map((v) => {
+                const maxCost = topCostVehicles[0]?.operationalCost || 1;
+                const pct = Math.round((v.operationalCost / maxCost) * 100);
+                return (
+                  <div key={v.id} className="space-y-1.5">
+                    <div className="flex justify-between text-xs font-bold">
+                      <span className="text-zinc-900">{v.name} <span className="font-mono text-zinc-800 font-bold">({v.registrationNumber})</span></span>
+                      <span className="text-zinc-900">{orgSettings?.currency || "INR"} {v.operationalCost.toLocaleString()}</span>
+                    </div>
+                    <div className="w-full bg-zinc-100 rounded-full h-2.5 overflow-hidden border border-zinc-200">
+                      <div className="bg-orange-500 h-full rounded-full" style={{ width: `${pct}%` }} />
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* Monthly Operational Expense Breakdown */}
+          <div className="rounded-xl border border-zinc-200 bg-white p-6 shadow-sm space-y-4">
+            <h3 className="text-sm font-bold text-zinc-900 uppercase tracking-wider">Monthly Cost Trends</h3>
+            {monthlyExpenses.length === 0 ? (
+              <div className="text-center py-10 text-xs text-zinc-700 font-bold">No monthly costs tracked yet.</div>
+            ) : (
+              <div className="space-y-4">
+                {monthlyExpenses.map((m) => {
+                  const maxCost = Math.max(...monthlyExpenses.map((item) => item.total)) || 1;
+                  const pct = Math.round((m.total / maxCost) * 100);
+                  return (
+                    <div key={m.month} className="space-y-1.5">
+                      <div className="flex justify-between text-xs font-bold">
+                        <span className="text-zinc-900">{m.month}</span>
+                        <span className="text-zinc-900">{orgSettings?.currency || "INR"} {m.total.toLocaleString()}</span>
+                      </div>
+                      <div className="text-[11px] text-zinc-800 font-bold flex gap-2">
+                        <span>Fuel: {orgSettings?.currency || "INR"} {m.fuel.toLocaleString()}</span>
+                        <span>•</span>
+                        <span>Maint: {orgSettings?.currency || "INR"} {m.maintenance.toLocaleString()}</span>
+                      </div>
+                      <div className="w-full bg-zinc-100 rounded-full h-2.5 overflow-hidden border border-zinc-200 mt-1">
+                        <div className="bg-orange-500 h-full rounded-full" style={{ width: `${pct}%` }} />
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            )}
+          </div>
+
+        </section>
+
+        {/* Master Fleet Table */}
+        <section className="space-y-4">
+          <h3 className="text-xs font-bold text-zinc-500 uppercase tracking-wider">Vehicle Fleet Analysis Details</h3>
+          <div className="overflow-x-auto rounded-xl border border-zinc-200 bg-white shadow-sm">
+            <table className="w-full text-left text-xs border-collapse">
+              <thead>
+                <tr className="border-b border-zinc-200 text-xs font-bold text-zinc-800 bg-zinc-50 uppercase tracking-wider">
+                  <th className="px-6 py-4">Reg Number</th>
+                  <th className="px-6 py-4">Vehicle Name</th>
+                  <th className="px-6 py-4 text-right">Distance</th>
+                  <th className="px-6 py-4 text-right">Fuel Liters</th>
+                  <th className="px-6 py-4 text-right">Efficiency</th>
+                  <th className="px-6 py-4 text-right">Fuel Cost</th>
+                  <th className="px-6 py-4 text-right">Maint Cost</th>
+                  <th className="px-6 py-4 text-right">Oper Cost</th>
+                  <th className="px-6 py-4 text-right">Revenue</th>
+                  <th className="px-6 py-4 text-right">ROI %</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-zinc-200">
+                {vehicleStats.map((v) => (
+                  <tr key={v.id} className="hover:bg-zinc-50/50 transition-colors text-zinc-900 font-semibold">
+                    <td className="px-6 py-4 font-mono font-bold text-zinc-950">{v.registrationNumber}</td>
+                    <td className="px-6 py-4 font-bold text-zinc-900">{v.name}</td>
+                    <td className="px-6 py-4 text-right text-zinc-900 font-bold">{v.totalDistance.toLocaleString()} km</td>
+                    <td className="px-6 py-4 text-right text-zinc-900 font-bold">{v.totalFuelLiters.toLocaleString()} L</td>
+                    <td className="px-6 py-4 text-right font-mono font-bold">{v.fuelEfficiency} km/L</td>
+                    <td className="px-6 py-4 text-right text-zinc-900 font-bold">INR {v.totalFuelCost.toLocaleString()}</td>
+                    <td className="px-6 py-4 text-right text-zinc-900 font-bold">INR {v.totalMaintenanceCost.toLocaleString()}</td>
+                    <td className="px-6 py-4 text-right text-zinc-950 font-bold">INR {v.operationalCost.toLocaleString()}</td>
+                    <td className="px-6 py-4 text-right text-emerald-800 font-bold">INR {v.revenue.toLocaleString()}</td>
+                    <td className="px-6 py-4 text-right text-orange-600 font-black">{v.roiPercent}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </section>
+
       </div>
     </div>
   );

@@ -110,49 +110,49 @@ export default async function Home({ searchParams }: PageProps) {
       <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-4">
         
         {/* Card 1: Active Vehicles */}
-        <div className="bg-zinc-50 border border-zinc-200 p-4 rounded-lg shadow-sm">
+        <div className="bg-white border border-zinc-200 p-4 rounded-lg shadow-sm">
           <div className="text-[10px] font-bold text-zinc-500 uppercase tracking-wider">Active Vehicles</div>
           <div className="text-xl font-bold text-zinc-900 mt-1">{activeVehicles}</div>
         </div>
 
         {/* Card 2: Available Vehicles */}
-        <div className="bg-zinc-50 border border-zinc-200 p-4 rounded-lg shadow-sm">
+        <div className="bg-white border border-zinc-200 p-4 rounded-lg shadow-sm">
           <div className="text-[10px] font-bold text-zinc-500 uppercase tracking-wider">Available Vehicles</div>
           <div className="text-xl font-bold text-zinc-900 mt-1">{availableVehicles}</div>
         </div>
 
         {/* Card 3: Vehicles in Maintenance */}
-        <div className="bg-zinc-50 border border-zinc-200 p-4 rounded-lg shadow-sm">
+        <div className="bg-white border border-zinc-200 p-4 rounded-lg shadow-sm">
           <div className="text-[10px] font-bold text-zinc-500 uppercase tracking-wider">In Maintenance</div>
           <div className="text-xl font-bold text-zinc-900 mt-1">{inShopVehicles}</div>
         </div>
 
         {/* Card 4: Active Trips */}
-        <div className="bg-zinc-50 border border-zinc-200 p-4 rounded-lg shadow-sm">
+        <div className="bg-white border border-zinc-200 p-4 rounded-lg shadow-sm">
           <div className="text-[10px] font-bold text-zinc-500 uppercase tracking-wider">Active Trips</div>
           <div className="text-xl font-bold text-zinc-900 mt-1">{activeTrips}</div>
         </div>
 
         {/* Card 5: Pending Trips */}
-        <div className="bg-zinc-50 border border-zinc-200 p-4 rounded-lg shadow-sm">
+        <div className="bg-white border border-zinc-200 p-4 rounded-lg shadow-sm">
           <div className="text-[10px] font-bold text-zinc-500 uppercase tracking-wider">Pending Trips</div>
           <div className="text-xl font-bold text-zinc-900 mt-1">{pendingTrips}</div>
         </div>
 
         {/* Card 6: Drivers On Duty */}
-        <div className="bg-zinc-50 border border-zinc-200 p-4 rounded-lg shadow-sm">
+        <div className="bg-white border border-zinc-200 p-4 rounded-lg shadow-sm">
           <div className="text-[10px] font-bold text-zinc-500 uppercase tracking-wider">Drivers On Duty</div>
           <div className="text-xl font-bold text-zinc-900 mt-1">{driversOnDuty}</div>
         </div>
 
         {/* Card 7: Fleet Utilization */}
-        <div className="bg-zinc-50 border border-zinc-200 p-4 rounded-lg shadow-sm flex flex-col justify-between">
+        <div className="bg-white border border-zinc-200 p-4 rounded-lg shadow-sm flex flex-col justify-between">
           <div>
             <div className="text-[10px] font-bold text-zinc-500 uppercase tracking-wider">Fleet Utilization</div>
             <div className="text-xl font-bold text-zinc-900 mt-1">{fleetUtilization}%</div>
           </div>
-          <div className="w-full bg-zinc-200 rounded-full h-1.5 overflow-hidden mt-2">
-            <div className="bg-zinc-950 h-full rounded-full" style={{ width: `${fleetUtilization}%` }} />
+          <div className="w-full bg-zinc-100 border border-zinc-200 rounded-full h-1.5 overflow-hidden mt-2">
+            <div className="bg-zinc-900 h-full rounded-full" style={{ width: `${fleetUtilization}%` }} />
           </div>
         </div>
 

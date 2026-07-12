@@ -46,6 +46,29 @@
   --radius-2xl: calc(var(--radius) * 1.8);
   --radius-3xl: calc(var(--radius) * 2.2);
   --radius-4xl: calc(var(--radius) * 2.6);
+
+  /* DESIGN.md Tokens */
+  --color-primary: #f97316;
+  --color-primary-active: #ea580c;
+  --color-primary-disabled: #27272a;
+  --color-ink: var(--foreground);
+  --color-body: #d1d5db;
+  --color-muted-soft: #898989;
+  --color-hairline: var(--border);
+  --color-hairline-soft: var(--border);
+  --color-canvas: var(--background);
+  --color-surface-soft: var(--muted);
+  --color-surface-card: var(--card);
+  --color-surface-strong: var(--secondary);
+  --color-surface-dark: var(--background);
+  --color-brand-accent: #f97316;
+  
+  --color-badge-orange: #fb923c;
+  --color-badge-pink: #ec4899;
+  --color-badge-violet: #8b5cf6;
+  --color-badge-emerald: #34d399;
+
+  --font-display: "Cal Sans", "Inter", sans-serif;
 }
 
 :root {

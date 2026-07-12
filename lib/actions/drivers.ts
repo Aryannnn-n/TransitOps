@@ -26,8 +26,11 @@ export async function createDriver(data: any) {
   if (!session) {
     throw new Error("Unauthorized");
   }
-  if (session.user.role !== "fleet_manager") {
-    throw new Error("Forbidden: Only Fleet Managers can register drivers.");
+  
+  // Fleet Managers and Safety Officers are allowed to manage drivers
+  const allowed = session.user.role === "fleet_manager" || session.user.role === "safety_officer";
+  if (!allowed) {
+    throw new Error("Forbidden: Only Fleet Managers or Safety Officers can register drivers.");
   }
 
   // 2. Validate payload
@@ -58,5 +61,24 @@ export async function createDriver(data: any) {
     return { success: true };
   } catch (err: any) {
     return { error: err.message || "Failed to create driver" };
+  }
+}
+
+export async function updateDriverStatus(driverId: string, status: "available" | "off_duty" | "suspended" | "on_trip") {
+  const session = await getServerSession();
+  if (!session) {
+    throw new Error("Unauthorized");
+  }
+
+  const allowed = session.user.role === "fleet_manager" || session.user.role === "safety_officer";
+  if (!allowed) {
+    return { error: "Forbidden: Only Fleet Managers or Safety Officers can update driver status." };
+  }
+
+  try {
+    await db.update(drivers).set({ status }).where(eq(drivers.id, driverId));
+    return { success: true };
+  } catch (err: any) {
+    return { error: err.message || "Failed to update driver status" };
   }
 }

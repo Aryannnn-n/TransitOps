@@ -1,9 +1,7 @@
 import { db } from "@/lib/db";
 import { fuelLogs, expenses, maintenanceLogs, vehicles, trips } from "@/lib/schema";
 import { eq, sql } from "drizzle-orm";
-import { CreateFuelLogForm } from "@/components/CreateFuelLogForm";
-import { CreateExpenseForm } from "@/components/CreateExpenseForm";
-import { ExpensesDashboard } from "@/components/ExpensesDashboard";
+import { ExpensesPageWrapper } from "@/components/ExpensesPageWrapper";
 import Link from "next/link";
 import { getServerSession } from "@/lib/session";
 import { redirect } from "next/navigation";
@@ -83,39 +81,36 @@ export default async function ExpensesPage() {
   const isAnalyst = session.user.role === "financial_analyst";
 
   return (
-    <div>
-      <header>
-        <Link href="/">Back to Dashboard</Link>
-        <h1>Fuel & Expense Operations</h1>
-      </header>
-
-      <hr />
-
-      {isAnalyst ? (
-        <div style={{ display: "flex", gap: "20px", flexWrap: "wrap" }}>
-          <div style={{ flex: 1, minWidth: "300px" }}>
-            <CreateFuelLogForm vehiclesList={vehiclesList} tripsList={tripsList} />
-          </div>
-          <div style={{ flex: 1, minWidth: "300px" }}>
-            <CreateExpenseForm vehiclesList={vehiclesList} tripsList={tripsList} />
-          </div>
+    <div className="space-y-6">
+      
+      {/* Header */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div>
+          <h2 className="text-xl font-bold tracking-tight text-zinc-900 font-display">Fuel & Expense Operations</h2>
+          <p className="text-xs text-zinc-700 font-medium">Log fuel fillings and general operational expenses to audit total cost of ownership.</p>
         </div>
-      ) : (
-        <p><em>* Logging fuel or expenses is locked to Financial Analysts only.</em></p>
-      )}
+        <div className="text-xs text-zinc-700 font-medium">
+          <Link href="/" className="hover:text-zinc-900 font-semibold underline">Dashboard</Link>
+          <span className="mx-2 text-zinc-400">/</span>
+          <span className="font-semibold text-zinc-900">Expenses</span>
+        </div>
+      </div>
 
-      <hr />
-
-      <ExpensesDashboard
+      {/* Main Expenses Page Wrapper */}
+      <ExpensesPageWrapper 
         fuelList={fuelList}
         expensesList={expensesList}
+        vehiclesList={vehiclesList}
+        tripsList={tripsList}
         totals={{
           totalFuelCost,
           totalMaintenanceCost,
           operationalCost,
           totalGeneralExpenses,
         }}
+        isAnalyst={isAnalyst}
       />
+
     </div>
   );
 }

@@ -44,28 +44,51 @@ export default async function MaintenancePage() {
   const isManager = session.user.role === "fleet_manager";
 
   return (
-    <div>
-      <header>
-        <Link href="/">Back to Dashboard</Link>
-        <h1>Maintenance & Workshop Logs</h1>
-      </header>
+    <div className="space-y-6">
+      
+      {/* Header */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div>
+          <h2 className="text-xl font-bold tracking-tight text-zinc-900 font-display">Maintenance & Workshop</h2>
+          <p className="text-xs text-zinc-700 font-medium">Log service events, track repair costs, and transition vehicles to/from the shop.</p>
+        </div>
+        <div className="text-xs text-zinc-700 font-medium">
+          <Link href="/" className="hover:text-zinc-900 font-semibold underline">Dashboard</Link>
+          <span className="mx-2 text-zinc-400">/</span>
+          <span className="font-semibold text-zinc-900">Maintenance</span>
+        </div>
+      </div>
 
-      <hr />
+      {/* Form at the top */}
+      <div className="space-y-4">
+        <div className="text-xs font-bold text-zinc-500 uppercase tracking-wider">Log Service Record</div>
+        {isManager ? (
+          <CreateMaintenanceForm vehiclesList={vehiclesList} />
+        ) : (
+          <div className="p-4 rounded-lg bg-zinc-50 border border-zinc-200 text-xs text-zinc-800 font-bold">
+            <em>* Creating and scheduling maintenance tickets is restricted to Fleet Managers.</em>
+          </div>
+        )}
+      </div>
 
-      {isManager ? (
-        <CreateMaintenanceForm vehiclesList={vehiclesList} />
-      ) : (
-        <p><em>* Creating/scheduling maintenance is locked to Fleet Managers only.</em></p>
-      )}
+      {/* List at the bottom */}
+      <div className="space-y-4 pt-4 border-t border-zinc-200">
+        <div className="text-xs font-bold text-zinc-500 uppercase tracking-wider">Service Log</div>
+        {rows.length === 0 ? (
+          <div className="text-center py-10 border border-zinc-200 rounded-lg bg-zinc-50 text-xs text-zinc-800 font-bold">
+            No maintenance logs or active shop tickets found.
+          </div>
+        ) : (
+          <MaintenanceList logsList={rows} userRole={session.user.role} />
+        )}
+      </div>
 
-      <hr />
+      {/* Bottom Status Flow Info */}
+      <p className="text-[10px] text-zinc-700 font-semibold leading-relaxed pt-4 border-t border-zinc-200">
+        * Status Flow: Creating maintenance record automatically moves vehicle to <strong>In Shop</strong> status (same transaction). 
+        Closing maintenance logs prompts a confirmation to set the vehicle back to <strong>Available</strong> unless Retired.
+      </p>
 
-      <h2>Workshop History & Open Tickets</h2>
-      {rows.length === 0 ? (
-        <p>No maintenance logs found.</p>
-      ) : (
-        <MaintenanceList logsList={rows} userRole={session.user.role} />
-      )}
     </div>
   );
 }

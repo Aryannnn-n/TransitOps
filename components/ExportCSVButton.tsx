@@ -34,8 +34,11 @@ export function ExportCSVButton({ data, filename, headers }: ExportCSVButtonProp
   }
 
   return (
-    <button onClick={downloadCSV}>
-      Export to CSV
+    <button 
+      onClick={downloadCSV}
+      className="rounded-md border border-hairline bg-canvas hover:bg-zinc-900/50 text-ink px-4 py-2 text-sm font-semibold transition-all cursor-pointer shadow-sm"
+    >
+      Export Data (CSV)
     </button>
   );
 }

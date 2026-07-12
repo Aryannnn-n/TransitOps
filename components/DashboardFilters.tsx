@@ -31,7 +31,7 @@ export function DashboardFilters({
         
         {/* Type Filter */}
         <div className="flex items-center gap-2">
-          <label className="text-xs font-semibold text-zinc-500 uppercase tracking-wider whitespace-nowrap">Vehicle Type</label>
+          <label className="text-xs font-semibold text-zinc-700 uppercase tracking-wider whitespace-nowrap">Vehicle Type</label>
           <select
             value={searchParams.get("type") || ""}
             onChange={(e) => handleChange("type", e.target.value)}
@@ -46,7 +46,7 @@ export function DashboardFilters({
 
         {/* Status Filter */}
         <div className="flex items-center gap-2">
-          <label className="text-xs font-semibold text-zinc-500 uppercase tracking-wider whitespace-nowrap">Status</label>
+          <label className="text-xs font-semibold text-zinc-700 uppercase tracking-wider whitespace-nowrap">Status</label>
           <select
             value={searchParams.get("status") || ""}
             onChange={(e) => handleChange("status", e.target.value)}
@@ -61,7 +61,7 @@ export function DashboardFilters({
 
         {/* Region Filter */}
         <div className="flex items-center gap-2">
-          <label className="text-xs font-semibold text-zinc-500 uppercase tracking-wider whitespace-nowrap">Region</label>
+          <label className="text-xs font-semibold text-zinc-700 uppercase tracking-wider whitespace-nowrap">Region</label>
           <select
             value={searchParams.get("region") || ""}
             onChange={(e) => handleChange("region", e.target.value)}

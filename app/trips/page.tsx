@@ -1,6 +1,6 @@
 import { db } from "@/lib/db";
 import { trips, vehicles, drivers } from "@/lib/schema";
-import { eq } from "drizzle-orm";
+import { eq, and, gte } from "drizzle-orm";
 import { TripBoard } from "@/components/TripBoard";
 import Link from "next/link";
 import { getServerSession } from "@/lib/session";
@@ -31,6 +31,7 @@ export default async function TripsPage() {
       vehicleReg: vehicles.registrationNumber,
       vehicleName: vehicles.name,
       vehicleOdometer: vehicles.odometerKm,
+      vehicleCapacity: vehicles.capacityKg,
       driverName: drivers.name,
     })
     .from(trips)
@@ -58,6 +59,7 @@ export default async function TripsPage() {
           registrationNumber: r.vehicleReg,
           name: r.vehicleName!,
           odometerKm: r.vehicleOdometer!,
+          capacityKg: r.vehicleCapacity!,
         }
       : null,
     driver: r.driverName
@@ -67,29 +69,61 @@ export default async function TripsPage() {
       : null,
   }));
 
+  // 3. Fetch available vehicles
+  const availableVehicles = await db
+    .select({
+      id: vehicles.id,
+      registrationNumber: vehicles.registrationNumber,
+      name: vehicles.name,
+      capacityKg: vehicles.capacityKg,
+    })
+    .from(vehicles)
+    .where(eq(vehicles.status, "available"));
+
+  // 4. Fetch available drivers whose license has not expired
+  const todayStr = new Date().toISOString().split("T")[0]; // YYYY-MM-DD
+  const availableDrivers = await db
+    .select({
+      id: drivers.id,
+      name: drivers.name,
+      safetyScore: drivers.safetyScore,
+    })
+    .from(drivers)
+    .where(
+      and(
+        eq(drivers.status, "available"),
+        gte(drivers.licenseExpiry, todayStr)
+      )
+    );
+
   const canWrite =
     session.user.role === "dispatcher" || session.user.role === "fleet_manager";
 
   return (
-    <div>
-      <header>
-        <Link href="/">Back to Dashboard</Link>
-        <h1>Shipment & Dispatch Board</h1>
-      </header>
-
-      <hr />
-
-      {canWrite && (
+    <div className="space-y-6">
+      
+      {/* Header */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <Link href="/trips/new">
-            <button type="button">Plan New Shipment (+)</button>
-          </Link>
+          <h2 className="text-xl font-bold tracking-tight text-zinc-900 font-display">Shipments & Dispatch Board</h2>
+          <p className="text-xs text-zinc-700 font-medium">Plan, dispatch, track, and close commercial shipping trips.</p>
         </div>
-      )}
+        <div className="text-xs text-zinc-700 font-medium">
+          <Link href="/" className="hover:text-zinc-900 font-semibold underline">Dashboard</Link>
+          <span className="mx-2 text-zinc-400">/</span>
+          <span className="font-semibold text-zinc-900">Trips</span>
+        </div>
+      </div>
 
-      <hr />
+      <div className="space-y-4">
+        <TripBoard 
+          tripsList={tripsList} 
+          userRole={session.user.role} 
+          availableVehicles={availableVehicles}
+          availableDrivers={availableDrivers}
+        />
+      </div>
 
-      <TripBoard tripsList={tripsList} userRole={session.user.role} />
     </div>
   );
 }
