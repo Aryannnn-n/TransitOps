@@ -2,6 +2,8 @@ import { getServerSession } from "@/lib/session";
 import { LogoutButton } from "@/components/LogoutButton";
 import { ShieldCheck, User, Mail, UserCheck } from "lucide-react";
 import { redirect } from "next/navigation";
+import Link from "next/link";
+
 
 export default async function Home() {
   const session = await getServerSession();
@@ -72,8 +74,12 @@ export default async function Home() {
               <p className="text-sm text-zinc-500 mb-4">
                 Monitor vehicle availability, maintenance, and driver assignments.
               </p>
+              <div>
+                <Link href="/vehicles">Manage Vehicles</Link>
+                {" | "}
+                <Link href="/drivers">Manage Drivers</Link>
+              </div>
             </div>
-            <div className="h-2 w-1/3 bg-zinc-800 rounded-full animate-pulse"></div>
           </div>
 
           <div className="rounded-2xl border border-zinc-800 bg-zinc-900/40 p-6 flex flex-col justify-between">
