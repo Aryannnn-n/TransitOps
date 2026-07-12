@@ -47,12 +47,9 @@ async function main() {
     expenses,
     vehicleDocuments,
     settings,
-    user,
-    account,
     notifications
   } = await import("./schema");
   const { sql } = await import("drizzle-orm");
-  const bcrypt = await import("bcrypt");
 
   // 1. Clear existing data (in correct order due to foreign keys)
   console.log("Clearing existing data...");
@@ -238,48 +235,58 @@ async function main() {
   // Map drivers by licenseNumber for easy lookup
   const dMap = new Map(dList.map(d => [d.licenseNumber, d]));
 
-  // 5. Seed Users & Accounts for Test Credentials
-  console.log("Hashing passwords for test users...");
-  const hashedPassword = await bcrypt.default.hash("Password123", 10);
+  // 5. Seed Users & Accounts for Test Credentials via Better Auth API
+  console.log("Seeding test users via Better Auth API...");
+  const { auth } = await import("./auth");
 
   const testUsers = [
     {
-      id: "user_fleet_manager",
       name: "Fleet Manager User",
       email: "manager@transitops.com",
-      role: "fleet_manager" as const,
+      password: "Password123",
+      role: "fleet_manager",
     },
     {
-      id: "user_dispatcher",
       name: "Dispatcher User",
       email: "dispatcher@transitops.com",
-      role: "dispatcher" as const,
+      password: "Password123",
+      role: "dispatcher",
     },
     {
-      id: "user_safety_officer",
       name: "Safety Officer User",
       email: "safety@transitops.com",
-      role: "safety_officer" as const,
+      password: "Password123",
+      role: "safety_officer",
     },
     {
-      id: "user_financial_analyst",
       name: "Financial Analyst User",
       email: "finance@transitops.com",
-      role: "financial_analyst" as const,
+      password: "Password123",
+      role: "financial_analyst",
     },
   ];
 
-  await db.insert(user).values(testUsers);
+  const userMap = new Map<string, string>(); // role -> userId
 
-  const testAccounts = testUsers.map((tu) => ({
-    id: `acc_${tu.id}`,
-    userId: tu.id,
-    accountId: tu.email,
-    providerId: "credential",
-    password: hashedPassword,
-  }));
-
-  await db.insert(account).values(testAccounts);
+  for (const tu of testUsers) {
+    try {
+      console.log(`Registering user ${tu.email}...`);
+      const res = await auth.api.signUpEmail({
+        body: {
+          name: tu.name,
+          email: tu.email,
+          password: tu.password,
+          role: tu.role,
+        },
+      });
+      if (res && res.user) {
+        userMap.set(tu.role, res.user.id);
+        console.log(`User registered with ID: ${res.user.id}`);
+      }
+    } catch (userErr) {
+      console.error(`Failed to register ${tu.email}:`, userErr);
+    }
+  }
 
   // 6. Seed Trips
   console.log("Seeding operational trips...");
@@ -512,14 +519,14 @@ async function main() {
   console.log("Seeding system notifications...");
   await db.insert(notifications).values([
     {
-      userId: "user_fleet_manager",
+      userId: userMap.get("fleet_manager") || null,
       title: "Vehicle Scheduled for Maintenance",
       message: "Eicher Pro 2049 Cargo (GJ01ZZ5555) requires an engine overhaul service.",
       type: "maintenance",
       isRead: false,
     },
     {
-      userId: "user_dispatcher",
+      userId: userMap.get("dispatcher") || null,
       title: "New Dispatch Assigned",
       message: "Trip dispatched successfully from Pune to Nashik assigned to driver Ramesh Dev.",
       type: "trip",
