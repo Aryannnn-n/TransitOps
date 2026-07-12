@@ -78,6 +78,8 @@ export default async function Home() {
                 <Link href="/vehicles">Manage Vehicles</Link>
                 {" | "}
                 <Link href="/drivers">Manage Drivers</Link>
+                {" | "}
+                <Link href="/maintenance">Workshop & Maintenance</Link>
               </div>
             </div>
           </div>
@@ -90,6 +92,8 @@ export default async function Home() {
               </p>
               <div>
                 <Link href="/trips">Manage & Dispatch Trips</Link>
+                {" | "}
+                <Link href="/expenses">Fuel & Expenses</Link>
               </div>
             </div>
           </div>
