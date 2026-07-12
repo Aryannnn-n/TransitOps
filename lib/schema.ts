@@ -69,20 +69,67 @@ export const documentTypeEnum = pgEnum("document_type", [
   "other",
 ]);
 
-// ---------- Users ----------
+// ---------- Users (Better Auth Table) ----------
 
-export const users = pgTable("users", {
-  id: uuid("id").primaryKey().defaultRandom(),
+export const user = pgTable("user", {
+  id: text("id").primaryKey(),
   name: text("name").notNull(),
-  email: text("email").notNull(),
-  passwordHash: text("password_hash").notNull(),
-  role: roleEnum("role").notNull(),
+  email: text("email").notNull().unique(),
+  emailVerified: boolean("email_verified").default(false).notNull(),
+  image: text("image"),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().$onUpdate(() => new Date()).notNull(),
+  role: roleEnum("role").notNull().default("dispatcher"),
   failedLoginAttempts: integer("failed_login_attempts").notNull().default(0),
   lockedUntil: timestamp("locked_until", { withTimezone: true }),
-  createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
-  updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow().$onUpdate(() => new Date()),
+});
+
+// ---------- Session (Better Auth Table) ----------
+
+export const session = pgTable("session", {
+  id: text("id").primaryKey(),
+  expiresAt: timestamp("expires_at").notNull(),
+  token: text("token").notNull().unique(),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").$onUpdate(() => new Date()).notNull(),
+  ipAddress: text("ip_address"),
+  userAgent: text("user_agent"),
+  userId: text("user_id").notNull().references(() => user.id, { onDelete: "cascade" }),
 }, (table) => [
-  uniqueIndex("users_email_unique_idx").on(table.email),
+  index("session_user_id_idx").on(table.userId),
+]);
+
+// ---------- Account (Better Auth Table) ----------
+
+export const account = pgTable("account", {
+  id: text("id").primaryKey(),
+  accountId: text("account_id").notNull(),
+  providerId: text("provider_id").notNull(),
+  userId: text("user_id").notNull().references(() => user.id, { onDelete: "cascade" }),
+  accessToken: text("access_token"),
+  refreshToken: text("refresh_token"),
+  idToken: text("id_token"),
+  accessTokenExpiresAt: timestamp("access_token_expires_at"),
+  refreshTokenExpiresAt: timestamp("refresh_token_expires_at"),
+  scope: text("scope"),
+  password: text("password"),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").$onUpdate(() => new Date()).notNull(),
+}, (table) => [
+  index("account_user_id_idx").on(table.userId),
+]);
+
+// ---------- Verification (Better Auth Table) ----------
+
+export const verification = pgTable("verification", {
+  id: text("id").primaryKey(),
+  identifier: text("identifier").notNull(),
+  value: text("value").notNull(),
+  expiresAt: timestamp("expires_at").notNull(),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().$onUpdate(() => new Date()).notNull(),
+}, (table) => [
+  index("verification_identifier_idx").on(table.identifier),
 ]);
 
 // ---------- Vehicles ----------
@@ -221,7 +268,7 @@ export const expenses = pgTable("expenses", {
 
 export const notifications = pgTable("notifications", {
   id: uuid("id").primaryKey().defaultRandom(),
-  userId: uuid("user_id").references(() => users.id, { onDelete: "cascade" }),
+  userId: text("user_id").references(() => user.id, { onDelete: "cascade" }),
   title: text("title").notNull(),
   message: text("message").notNull(),
   type: text("type").notNull(),
@@ -255,7 +302,7 @@ export const settings = pgTable("settings", {
   distanceUnit: text("distance_unit").notNull().default("km"),
   ratePerKm: numeric("rate_per_km", { precision: 10, scale: 2 }).notNull().default("0"),
   avgSpeedKmph: numeric("avg_speed_kmph", { precision: 6, scale: 2 }).notNull().default("40"),
-  updatedBy: uuid("updated_by").references(() => users.id, { onDelete: "set null" }),
+  updatedBy: text("updated_by").references(() => user.id, { onDelete: "set null" }),
   updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow().$onUpdate(() => new Date()),
 }, (table) => [
   check("settings_rate_positive", sql`${table.ratePerKm} >= 0`),
@@ -264,9 +311,19 @@ export const settings = pgTable("settings", {
 
 // ---------- Relations (for Drizzle's relational query API) ----------
 
-export const usersRelations = relations(users, ({ many }) => ({
+export const userRelations = relations(user, ({ many }) => ({
+  sessions: many(session),
+  accounts: many(account),
   notifications: many(notifications),
   updatedSettings: many(settings),
+}));
+
+export const sessionRelations = relations(session, ({ one }) => ({
+  user: one(user, { fields: [session.userId], references: [user.id] }),
+}));
+
+export const accountRelations = relations(account, ({ one }) => ({
+  user: one(user, { fields: [account.userId], references: [user.id] }),
 }));
 
 export const vehiclesRelations = relations(vehicles, ({ many }) => ({
@@ -302,7 +359,7 @@ export const expensesRelations = relations(expenses, ({ one }) => ({
 }));
 
 export const notificationsRelations = relations(notifications, ({ one }) => ({
-  user: one(users, { fields: [notifications.userId], references: [users.id] }),
+  user: one(user, { fields: [notifications.userId], references: [user.id] }),
 }));
 
 export const vehicleDocumentsRelations = relations(vehicleDocuments, ({ one }) => ({
@@ -310,5 +367,5 @@ export const vehicleDocumentsRelations = relations(vehicleDocuments, ({ one }) =
 }));
 
 export const settingsRelations = relations(settings, ({ one }) => ({
-  updatedByUser: one(users, { fields: [settings.updatedBy], references: [users.id] }),
+  updatedByUser: one(user, { fields: [settings.updatedBy], references: [user.id] }),
 }));
