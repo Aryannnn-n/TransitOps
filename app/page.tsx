@@ -95,8 +95,8 @@ export default async function Home({ searchParams }: PageProps) {
       
       {/* Top Title/Header */}
       <div>
-        <h2 className="text-xl font-bold tracking-tight text-zinc-900 font-display">Dashboard</h2>
-        <p className="text-xs text-zinc-500 font-medium">Real-time status overview of vehicles, drivers, and trips.</p>
+        <h2 className="text-2xl font-bold tracking-tight text-zinc-900 font-display">Dashboard</h2>
+        <p className="text-sm text-zinc-700 font-bold">Real-time status overview of vehicles, drivers, and trips.</p>
       </div>
 
       {/* Row 1: Filters */}
@@ -111,45 +111,45 @@ export default async function Home({ searchParams }: PageProps) {
         
         {/* Card 1: Active Vehicles */}
         <div className="bg-white border border-zinc-200 p-4 rounded-lg shadow-sm">
-          <div className="text-[10px] font-bold text-zinc-500 uppercase tracking-wider">Active Vehicles</div>
-          <div className="text-xl font-bold text-zinc-900 mt-1">{activeVehicles}</div>
+          <div className="text-sm font-bold text-zinc-700 uppercase tracking-wider">Active Vehicles</div>
+          <div className="text-2xl font-bold text-zinc-950 mt-1">{activeVehicles}</div>
         </div>
 
         {/* Card 2: Available Vehicles */}
         <div className="bg-white border border-zinc-200 p-4 rounded-lg shadow-sm">
-          <div className="text-[10px] font-bold text-zinc-500 uppercase tracking-wider">Available Vehicles</div>
-          <div className="text-xl font-bold text-zinc-900 mt-1">{availableVehicles}</div>
+          <div className="text-sm font-bold text-zinc-700 uppercase tracking-wider">Available Vehicles</div>
+          <div className="text-2xl font-bold text-zinc-950 mt-1">{availableVehicles}</div>
         </div>
 
         {/* Card 3: Vehicles in Maintenance */}
         <div className="bg-white border border-zinc-200 p-4 rounded-lg shadow-sm">
-          <div className="text-[10px] font-bold text-zinc-500 uppercase tracking-wider">In Maintenance</div>
-          <div className="text-xl font-bold text-zinc-900 mt-1">{inShopVehicles}</div>
+          <div className="text-sm font-bold text-zinc-700 uppercase tracking-wider">In Maintenance</div>
+          <div className="text-2xl font-bold text-zinc-950 mt-1">{inShopVehicles}</div>
         </div>
 
         {/* Card 4: Active Trips */}
         <div className="bg-white border border-zinc-200 p-4 rounded-lg shadow-sm">
-          <div className="text-[10px] font-bold text-zinc-500 uppercase tracking-wider">Active Trips</div>
-          <div className="text-xl font-bold text-zinc-900 mt-1">{activeTrips}</div>
+          <div className="text-sm font-bold text-zinc-700 uppercase tracking-wider">Active Trips</div>
+          <div className="text-2xl font-bold text-zinc-950 mt-1">{activeTrips}</div>
         </div>
 
         {/* Card 5: Pending Trips */}
         <div className="bg-white border border-zinc-200 p-4 rounded-lg shadow-sm">
-          <div className="text-[10px] font-bold text-zinc-500 uppercase tracking-wider">Pending Trips</div>
-          <div className="text-xl font-bold text-zinc-900 mt-1">{pendingTrips}</div>
+          <div className="text-sm font-bold text-zinc-700 uppercase tracking-wider">Pending Trips</div>
+          <div className="text-2xl font-bold text-zinc-950 mt-1">{pendingTrips}</div>
         </div>
 
         {/* Card 6: Drivers On Duty */}
         <div className="bg-white border border-zinc-200 p-4 rounded-lg shadow-sm">
-          <div className="text-[10px] font-bold text-zinc-500 uppercase tracking-wider">Drivers On Duty</div>
-          <div className="text-xl font-bold text-zinc-900 mt-1">{driversOnDuty}</div>
+          <div className="text-sm font-bold text-zinc-700 uppercase tracking-wider">Drivers On Duty</div>
+          <div className="text-2xl font-bold text-zinc-950 mt-1">{driversOnDuty}</div>
         </div>
 
         {/* Card 7: Fleet Utilization */}
         <div className="bg-white border border-zinc-200 p-4 rounded-lg shadow-sm flex flex-col justify-between">
           <div>
-            <div className="text-[10px] font-bold text-zinc-500 uppercase tracking-wider">Fleet Utilization</div>
-            <div className="text-xl font-bold text-zinc-900 mt-1">{fleetUtilization}%</div>
+            <div className="text-sm font-bold text-zinc-700 uppercase tracking-wider">Fleet Utilization</div>
+            <div className="text-2xl font-bold text-zinc-950 mt-1">{fleetUtilization}%</div>
           </div>
           <div className="w-full bg-zinc-100 border border-zinc-200 rounded-full h-1.5 overflow-hidden mt-2">
             <div className="bg-zinc-900 h-full rounded-full" style={{ width: `${fleetUtilization}%` }} />
@@ -163,15 +163,15 @@ export default async function Home({ searchParams }: PageProps) {
         
         {/* Left Section: Recent Trips Table */}
         <div className="lg:col-span-2 rounded-lg border border-zinc-200 bg-white p-5 shadow-sm space-y-4">
-          <h3 className="text-xs font-bold text-zinc-500 uppercase tracking-wider">Recent Trips</h3>
+          <h3 className="text-sm font-bold text-zinc-500 uppercase tracking-wider">Recent Trips</h3>
           
           {recentTripsDetailed.length === 0 ? (
-            <div className="text-center py-10 text-xs text-zinc-500">
+            <div className="text-center py-10 text-sm text-zinc-500">
               No recent trips recorded.
             </div>
           ) : (
             <div className="overflow-x-auto">
-              <table className="w-full text-left text-xs border-collapse">
+              <table className="w-full text-left text-sm border-collapse">
                 <thead>
                   <tr className="border-b border-zinc-200 text-zinc-500 font-bold uppercase tracking-wider bg-zinc-50/50">
                     <th className="px-4 py-3">Trip ID</th>
@@ -210,7 +210,7 @@ export default async function Home({ searchParams }: PageProps) {
 
         {/* Right Section: Vehicle Status Panel */}
         <div className="rounded-lg border border-zinc-200 bg-white p-5 shadow-sm space-y-4">
-          <h3 className="text-xs font-bold text-zinc-500 uppercase tracking-wider">Vehicle Status Panel</h3>
+          <h3 className="text-sm font-bold text-zinc-500 uppercase tracking-wider">Vehicle Status Panel</h3>
           
           <div className="space-y-4 pt-2">
             {Object.entries(statusCounts).map(([status, count]) => {
@@ -223,7 +223,7 @@ export default async function Home({ searchParams }: PageProps) {
 
               return (
                 <div key={status} className="space-y-1">
-                  <div className="flex justify-between text-xs font-semibold">
+                  <div className="flex justify-between text-sm font-semibold">
                     <span className="capitalize text-zinc-700">{status.replace("_", " ")}</span>
                     <span className="text-zinc-900">{count} <span className="text-zinc-400 font-medium">({pct}%)</span></span>
                   </div>

@@ -55,7 +55,7 @@ export function MaintenanceList({ logsList, userRole }: MaintenanceListProps) {
   return (
     <div className="space-y-4">
       {error && (
-        <div className="rounded-md border border-red-200 bg-red-50 p-3 text-xs text-red-700 flex items-start gap-2.5">
+        <div className="rounded-md border border-red-200 bg-red-50 p-3 text-sm text-red-700 flex items-start gap-2.5">
           <ShieldAlert className="h-4 w-4 shrink-0 mt-0.5" />
           <span>{error}</span>
         </div>
@@ -108,15 +108,15 @@ export function MaintenanceList({ logsList, userRole }: MaintenanceListProps) {
                       {log.status}
                     </span>
                   </td>
-                  <td className="px-6 py-3.5 text-zinc-700 font-medium text-xs" suppressHydrationWarning>{openDate}</td>
-                  <td className="px-6 py-3.5 text-zinc-700 font-medium text-xs" suppressHydrationWarning>{closeDate}</td>
+                  <td className="px-6 py-3.5 text-zinc-700 font-medium text-sm" suppressHydrationWarning>{openDate}</td>
+                  <td className="px-6 py-3.5 text-zinc-700 font-medium text-sm" suppressHydrationWarning>{closeDate}</td>
                   <td className="px-6 py-3.5 text-center">
                     {log.status === "open" && isManager ? (
                       <button
                         type="button"
                         disabled={isLoading}
                         onClick={() => handleCloseLog(log.id)}
-                        className="rounded-md border border-red-200 bg-red-50 text-red-700 px-3 py-1 text-xs hover:bg-red-100 transition-colors font-bold cursor-pointer disabled:opacity-50 inline-flex items-center gap-1"
+                        className="rounded-md border border-red-200 bg-red-50 text-red-700 px-3 py-1 text-sm hover:bg-red-100 transition-colors font-bold cursor-pointer disabled:opacity-50 inline-flex items-center gap-1"
                       >
                         {isLoading && <Loader2 className="h-3 w-3 animate-spin" />}
                         Close Ticket

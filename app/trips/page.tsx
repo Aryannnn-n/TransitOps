@@ -106,9 +106,9 @@ export default async function TripsPage() {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <h2 className="text-xl font-bold tracking-tight text-zinc-900 font-display">Shipments & Dispatch Board</h2>
-          <p className="text-xs text-zinc-700 font-medium">Plan, dispatch, track, and close commercial shipping trips.</p>
+          <p className="text-sm text-zinc-700 font-medium">Plan, dispatch, track, and close commercial shipping trips.</p>
         </div>
-        <div className="text-xs text-zinc-700 font-medium">
+        <div className="text-sm text-zinc-700 font-medium">
           <Link href="/" className="hover:text-zinc-900 font-semibold underline">Dashboard</Link>
           <span className="mx-2 text-zinc-400">/</span>
           <span className="font-semibold text-zinc-900">Trips</span>

@@ -76,13 +76,13 @@ export function SettingsForm({
         <h3 className="text-sm font-bold tracking-tight text-zinc-900 uppercase tracking-wider">Organizational Settings</h3>
 
         {error && (
-          <div className="rounded-md border border-red-200 bg-red-50 p-3 text-xs text-red-750 flex items-start gap-2.5 font-bold">
+          <div className="rounded-md border border-red-200 bg-red-50 p-3 text-sm text-red-750 flex items-start gap-2.5 font-bold">
             <ShieldAlert className="h-4 w-4 shrink-0 mt-0.5" />
             <span>{error}</span>
           </div>
         )}
         {success && (
-          <div className="rounded-md border border-emerald-200 bg-emerald-50 p-3 text-xs text-emerald-700 flex items-start gap-2.5 font-bold">
+          <div className="rounded-md border border-emerald-200 bg-emerald-50 p-3 text-sm text-emerald-700 flex items-start gap-2.5 font-bold">
             <ShieldCheck className="h-4 w-4 shrink-0 mt-0.5" />
             <span>{success}</span>
           </div>
@@ -91,7 +91,7 @@ export function SettingsForm({
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="space-y-4">
             <div>
-              <label className="block text-xs font-bold text-zinc-800 uppercase tracking-wider mb-1">
+              <label className="block text-sm font-semibold text-zinc-700 mb-1">
                 Depot Name
               </label>
               <input
@@ -104,7 +104,7 @@ export function SettingsForm({
             </div>
 
             <div>
-              <label className="block text-xs font-bold text-zinc-800 uppercase tracking-wider mb-1">
+              <label className="block text-sm font-semibold text-zinc-700 mb-1">
                 Currency
               </label>
               <input
@@ -117,7 +117,7 @@ export function SettingsForm({
             </div>
 
             <div>
-              <label className="block text-xs font-bold text-zinc-800 uppercase tracking-wider mb-1">
+              <label className="block text-sm font-semibold text-zinc-700 mb-1">
                 Distance Unit
               </label>
               <input
@@ -130,7 +130,7 @@ export function SettingsForm({
             </div>
 
             <div>
-              <label className="block text-xs font-bold text-zinc-800 uppercase tracking-wider mb-1">
+              <label className="block text-sm font-semibold text-zinc-700 mb-1">
                 Rate per KM ({currency})
               </label>
               <input
@@ -144,7 +144,7 @@ export function SettingsForm({
             </div>
 
             <div>
-              <label className="block text-xs font-bold text-zinc-800 uppercase tracking-wider mb-1">
+              <label className="block text-sm font-semibold text-zinc-700 mb-1">
                 Average Speed (KMPH)
               </label>
               <input
@@ -163,13 +163,13 @@ export function SettingsForm({
               <button 
                 type="submit" 
                 disabled={isLoading}
-                className="rounded-md bg-zinc-900 hover:bg-zinc-800 text-white px-5 py-2 text-xs font-bold transition-colors disabled:opacity-50 cursor-pointer shadow-sm flex items-center gap-1.5"
+                className="rounded-md bg-zinc-900 hover:bg-zinc-800 text-white px-5 py-2 text-sm font-bold transition-colors disabled:opacity-50 cursor-pointer shadow-sm flex items-center gap-1.5"
               >
                 {isLoading && <Loader2 className="h-4 w-4 animate-spin" />}
                 {isLoading ? "Saving..." : "Save Settings"}
               </button>
             ) : (
-              <span className="text-xs text-zinc-700 font-semibold italic">
+              <span className="text-sm text-zinc-700 font-semibold italic">
                 * Note: Only Financial Analysts can edit organizational settings.
               </span>
             )}
@@ -182,7 +182,7 @@ export function SettingsForm({
         <h3 className="text-sm font-bold tracking-tight text-zinc-950 uppercase tracking-wider">Role Permissions Matrix</h3>
         
         <div className="overflow-x-auto rounded-lg border border-zinc-200 bg-white shadow-sm">
-          <table className="w-full text-left text-xs border-collapse">
+          <table className="w-full text-left text-sm border-collapse">
             <thead>
               <tr className="border-b border-zinc-200 text-zinc-800 font-bold uppercase tracking-wider bg-zinc-50/50">
                 <th className="px-4 py-3">Role</th>

@@ -23,7 +23,7 @@ export function Navbar() {
         <input
           type="text"
           placeholder="Search vehicles, shipments, logs..."
-          className="w-full rounded-md border border-zinc-200 bg-white pl-9 pr-4 py-1.5 text-xs text-zinc-900 placeholder-zinc-400 focus:border-zinc-900 focus:outline-none transition-colors"
+          className="w-full rounded-md border border-zinc-200 bg-white pl-9 pr-4 py-1.5 text-sm text-zinc-900 placeholder-zinc-400 focus:border-zinc-900 focus:outline-none transition-colors"
         />
       </div>
 
@@ -31,13 +31,13 @@ export function Navbar() {
       <div className="flex items-center gap-3">
         
         {/* Role display */}
-        <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-zinc-50 border border-zinc-200 text-zinc-700 text-xs font-semibold">
+        <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-zinc-50 border border-zinc-200 text-zinc-700 text-sm font-semibold">
           <UserCheck className="h-3.5 w-3.5 text-zinc-500" />
           <span className="capitalize">{user.role.replace("_", " ")}</span>
         </div>
 
         {/* Profile Avatar */}
-        <div className="h-8 w-8 rounded-full bg-zinc-900 text-white flex items-center justify-center text-xs font-bold tracking-wider shadow-sm select-none">
+        <div className="h-8 w-8 rounded-full bg-zinc-900 text-white flex items-center justify-center text-sm font-bold tracking-wider shadow-sm select-none">
           {initials || "U"}
         </div>
 

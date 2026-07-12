@@ -79,13 +79,13 @@ export function CreateExpenseForm({ vehiclesList, tripsList }: CreateExpenseForm
       <h3 className="text-sm font-bold tracking-tight text-zinc-900 uppercase tracking-wider mb-4">Log Trip Expense (Toll / Other)</h3>
       
       {error && (
-        <div className="mb-4 rounded-md border border-red-200 bg-red-50 p-3 text-xs text-red-700 flex items-start gap-2.5">
+        <div className="mb-4 rounded-md border border-red-200 bg-red-50 p-3 text-sm text-red-700 flex items-start gap-2.5">
           <ShieldAlert className="h-4 w-4 shrink-0 mt-0.5" />
           <span>{error}</span>
         </div>
       )}
       {success && (
-        <div className="mb-4 rounded-md border border-emerald-200 bg-emerald-50 p-3 text-xs text-emerald-700 flex items-start gap-2.5">
+        <div className="mb-4 rounded-md border border-emerald-200 bg-emerald-50 p-3 text-sm text-emerald-700 flex items-start gap-2.5">
           <ShieldCheck className="h-4 w-4 shrink-0 mt-0.5" />
           <span>Expense saved successfully!</span>
         </div>
@@ -93,7 +93,7 @@ export function CreateExpenseForm({ vehiclesList, tripsList }: CreateExpenseForm
 
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
-          <label className="block text-xs font-semibold text-zinc-700 mb-1">
+          <label className="block text-sm font-semibold text-zinc-700 mb-1">
             Select Vehicle
           </label>
           <select 
@@ -110,14 +110,14 @@ export function CreateExpenseForm({ vehiclesList, tripsList }: CreateExpenseForm
             ))}
           </select>
           {fieldErrors.vehicleId && (
-            <span className="text-xs text-red-700 font-bold mt-1 block font-semibold">
+            <span className="text-sm text-red-700 font-bold mt-1 block font-semibold">
               {fieldErrors.vehicleId.join(", ")}
             </span>
           )}
         </div>
 
         <div>
-          <label className="block text-xs font-semibold text-zinc-700 mb-1">
+          <label className="block text-sm font-semibold text-zinc-700 mb-1">
             Select Trip (Optional)
           </label>
           <select 
@@ -133,7 +133,7 @@ export function CreateExpenseForm({ vehiclesList, tripsList }: CreateExpenseForm
             ))}
           </select>
           {fieldErrors.tripId && (
-            <span className="text-xs text-red-700 font-bold mt-1 block font-semibold">
+            <span className="text-sm text-red-700 font-bold mt-1 block font-semibold">
               {fieldErrors.tripId.join(", ")}
             </span>
           )}
@@ -141,7 +141,7 @@ export function CreateExpenseForm({ vehiclesList, tripsList }: CreateExpenseForm
 
         <div className="grid grid-cols-2 gap-4">
           <div>
-            <label className="block text-xs font-semibold text-zinc-700 mb-1">
+            <label className="block text-sm font-semibold text-zinc-700 mb-1">
               Expense Category
             </label>
             <select 
@@ -153,14 +153,14 @@ export function CreateExpenseForm({ vehiclesList, tripsList }: CreateExpenseForm
               <option value="other">Other</option>
             </select>
             {fieldErrors.type && (
-              <span className="text-xs text-red-700 font-bold mt-1 block font-semibold">
+              <span className="text-sm text-red-700 font-bold mt-1 block font-semibold">
                 {fieldErrors.type.join(", ")}
               </span>
             )}
           </div>
 
           <div>
-            <label className="block text-xs font-semibold text-zinc-700 mb-1">
+            <label className="block text-sm font-semibold text-zinc-700 mb-1">
               Amount (INR)
             </label>
             <input
@@ -173,7 +173,7 @@ export function CreateExpenseForm({ vehiclesList, tripsList }: CreateExpenseForm
               className="w-full rounded-md border border-zinc-200 bg-white px-3 py-2 text-sm text-zinc-900 placeholder-zinc-400 focus:border-zinc-900 focus:outline-none transition-colors"
             />
             {fieldErrors.amount && (
-              <span className="text-xs text-red-700 font-bold mt-1 block font-semibold">
+              <span className="text-sm text-red-700 font-bold mt-1 block font-semibold">
                 {fieldErrors.amount.join(", ")}
               </span>
             )}
@@ -181,7 +181,7 @@ export function CreateExpenseForm({ vehiclesList, tripsList }: CreateExpenseForm
         </div>
 
         <div>
-          <label className="block text-xs font-semibold text-zinc-700 mb-1">
+          <label className="block text-sm font-semibold text-zinc-700 mb-1">
             Expense Date
           </label>
           <input
@@ -192,7 +192,7 @@ export function CreateExpenseForm({ vehiclesList, tripsList }: CreateExpenseForm
             className="w-full rounded-md border border-zinc-200 bg-white px-3 py-2 text-sm text-zinc-900 focus:border-zinc-900 focus:outline-none transition-colors"
           />
           {fieldErrors.date && (
-            <span className="text-xs text-red-700 font-bold mt-1 block font-semibold">
+            <span className="text-sm text-red-700 font-bold mt-1 block font-semibold">
               {fieldErrors.date.join(", ")}
             </span>
           )}

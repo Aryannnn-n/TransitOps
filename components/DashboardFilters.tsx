@@ -31,11 +31,11 @@ export function DashboardFilters({
         
         {/* Type Filter */}
         <div className="flex items-center gap-2">
-          <label className="text-xs font-semibold text-zinc-700 uppercase tracking-wider whitespace-nowrap">Vehicle Type</label>
+          <label className="text-sm font-semibold text-zinc-700 whitespace-nowrap">Vehicle Type</label>
           <select
             value={searchParams.get("type") || ""}
             onChange={(e) => handleChange("type", e.target.value)}
-            className="rounded-md border border-zinc-200 bg-white px-3 py-1.5 text-xs text-zinc-900 focus:border-zinc-900 focus:outline-none transition-colors"
+            className="rounded-md border border-zinc-200 bg-white px-3 py-1.5 text-sm text-zinc-900 focus:border-zinc-900 focus:outline-none transition-colors"
           >
             <option value="">All Types</option>
             {types.map((t) => (
@@ -46,11 +46,11 @@ export function DashboardFilters({
 
         {/* Status Filter */}
         <div className="flex items-center gap-2">
-          <label className="text-xs font-semibold text-zinc-700 uppercase tracking-wider whitespace-nowrap">Status</label>
+          <label className="text-sm font-semibold text-zinc-700 whitespace-nowrap">Status</label>
           <select
             value={searchParams.get("status") || ""}
             onChange={(e) => handleChange("status", e.target.value)}
-            className="rounded-md border border-zinc-200 bg-white px-3 py-1.5 text-xs text-zinc-900 focus:border-zinc-900 focus:outline-none transition-colors"
+            className="rounded-md border border-zinc-200 bg-white px-3 py-1.5 text-sm text-zinc-900 focus:border-zinc-900 focus:outline-none transition-colors"
           >
             <option value="">All Statuses</option>
             {statuses.map((s) => (
@@ -61,11 +61,11 @@ export function DashboardFilters({
 
         {/* Region Filter */}
         <div className="flex items-center gap-2">
-          <label className="text-xs font-semibold text-zinc-700 uppercase tracking-wider whitespace-nowrap">Region</label>
+          <label className="text-sm font-semibold text-zinc-700 whitespace-nowrap">Region</label>
           <select
             value={searchParams.get("region") || ""}
             onChange={(e) => handleChange("region", e.target.value)}
-            className="rounded-md border border-zinc-200 bg-white px-3 py-1.5 text-xs text-zinc-900 focus:border-zinc-900 focus:outline-none transition-colors"
+            className="rounded-md border border-zinc-200 bg-white px-3 py-1.5 text-sm text-zinc-900 focus:border-zinc-900 focus:outline-none transition-colors"
           >
             <option value="">All Regions</option>
             {regions.map((r) => (
@@ -78,7 +78,7 @@ export function DashboardFilters({
 
       <button 
         onClick={() => router.push(pathname)}
-        className="rounded-md border border-zinc-200 bg-white hover:bg-zinc-50 text-zinc-700 px-4 py-1.5 text-xs font-semibold transition-colors cursor-pointer whitespace-nowrap self-end sm:self-auto"
+        className="rounded-md border border-zinc-200 bg-white hover:bg-zinc-50 text-zinc-700 px-4 py-1.5 text-sm font-semibold transition-colors cursor-pointer whitespace-nowrap self-end sm:self-auto"
       >
         Clear Filters
       </button>

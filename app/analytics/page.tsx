@@ -167,28 +167,28 @@ export default async function AnalyticsPage() {
 
         {/* Analytics KPI Cards */}
         <section className="space-y-4">
-          <h3 className="text-xs font-bold text-zinc-500 uppercase tracking-wider">Fleet Performance Indicators</h3>
+          <h3 className="text-sm font-bold text-zinc-500 uppercase tracking-wider">Fleet Performance Indicators</h3>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             
             <div className="rounded-xl border border-zinc-200 bg-white p-5 shadow-sm space-y-1">
-              <div className="text-xs font-bold text-zinc-650 uppercase tracking-wider">Average Fuel Efficiency</div>
+              <div className="text-sm font-bold text-zinc-650 uppercase tracking-wider">Average Fuel Efficiency</div>
               <div className="text-2xl font-bold text-zinc-900 font-display">{averageFuelEfficiency} <span className="text-sm font-semibold text-zinc-700">km/L</span></div>
             </div>
 
             <div className="rounded-xl border border-zinc-200 bg-white p-5 shadow-sm space-y-1">
-              <div className="text-xs font-bold text-zinc-650 uppercase tracking-wider">Fleet Utilization</div>
+              <div className="text-sm font-bold text-zinc-650 uppercase tracking-wider">Fleet Utilization</div>
               <div className="text-2xl font-bold text-emerald-700 font-display">{fleetUtilizationPct}%</div>
               <div className="text-[11px] text-zinc-800 font-bold">{activeVehiclesCount} of {totalVehiclesCount} active assets</div>
             </div>
 
             <div className="rounded-xl border border-zinc-200 bg-white p-5 shadow-sm space-y-1">
-              <div className="text-xs font-bold text-zinc-650 uppercase tracking-wider">Total Operational Cost</div>
+              <div className="text-sm font-bold text-zinc-650 uppercase tracking-wider">Total Operational Cost</div>
               <div className="text-2xl font-bold text-zinc-900 font-display">{orgSettings?.currency || "INR"} {totalOperationalCost.toLocaleString()}</div>
               <div className="text-[11px] text-zinc-800 font-bold">Fuel: {totalFuelCost.toLocaleString()} | Maint: {totalMaintenanceCost.toLocaleString()}</div>
             </div>
 
             <div className="rounded-xl border border-orange-200 bg-orange-50/50 p-5 shadow-sm space-y-1">
-              <div className="text-xs font-bold text-orange-800 uppercase tracking-wider">Fleet Overall ROI</div>
+              <div className="text-sm font-bold text-orange-800 uppercase tracking-wider">Fleet Overall ROI</div>
               <div className="text-2xl font-bold text-orange-600 font-display">{overallROI}</div>
               <div className="text-[11px] text-orange-850 font-bold">Calculated over acquisition cost</div>
             </div>
@@ -208,7 +208,7 @@ export default async function AnalyticsPage() {
                 const pct = Math.round((v.operationalCost / maxCost) * 100);
                 return (
                   <div key={v.id} className="space-y-1.5">
-                    <div className="flex justify-between text-xs font-bold">
+                    <div className="flex justify-between text-sm font-bold">
                       <span className="text-zinc-900">{v.name} <span className="font-mono text-zinc-800 font-bold">({v.registrationNumber})</span></span>
                       <span className="text-zinc-900">{orgSettings?.currency || "INR"} {v.operationalCost.toLocaleString()}</span>
                     </div>
@@ -225,7 +225,7 @@ export default async function AnalyticsPage() {
           <div className="rounded-xl border border-zinc-200 bg-white p-6 shadow-sm space-y-4">
             <h3 className="text-sm font-bold text-zinc-900 uppercase tracking-wider">Monthly Cost Trends</h3>
             {monthlyExpenses.length === 0 ? (
-              <div className="text-center py-10 text-xs text-zinc-700 font-bold">No monthly costs tracked yet.</div>
+              <div className="text-center py-10 text-sm text-zinc-700 font-bold">No monthly costs tracked yet.</div>
             ) : (
               <div className="space-y-4">
                 {monthlyExpenses.map((m) => {
@@ -233,7 +233,7 @@ export default async function AnalyticsPage() {
                   const pct = Math.round((m.total / maxCost) * 100);
                   return (
                     <div key={m.month} className="space-y-1.5">
-                      <div className="flex justify-between text-xs font-bold">
+                      <div className="flex justify-between text-sm font-bold">
                         <span className="text-zinc-900">{m.month}</span>
                         <span className="text-zinc-900">{orgSettings?.currency || "INR"} {m.total.toLocaleString()}</span>
                       </div>
@@ -256,11 +256,11 @@ export default async function AnalyticsPage() {
 
         {/* Master Fleet Table */}
         <section className="space-y-4">
-          <h3 className="text-xs font-bold text-zinc-500 uppercase tracking-wider">Vehicle Fleet Analysis Details</h3>
+          <h3 className="text-sm font-bold text-zinc-500 uppercase tracking-wider">Vehicle Fleet Analysis Details</h3>
           <div className="overflow-x-auto rounded-xl border border-zinc-200 bg-white shadow-sm">
-            <table className="w-full text-left text-xs border-collapse">
+            <table className="w-full text-left text-sm border-collapse">
               <thead>
-                <tr className="border-b border-zinc-200 text-xs font-bold text-zinc-800 bg-zinc-50 uppercase tracking-wider">
+                <tr className="border-b border-zinc-200 text-sm font-bold text-zinc-800 bg-zinc-50 uppercase tracking-wider">
                   <th className="px-6 py-4">Reg Number</th>
                   <th className="px-6 py-4">Vehicle Name</th>
                   <th className="px-6 py-4 text-right">Distance</th>

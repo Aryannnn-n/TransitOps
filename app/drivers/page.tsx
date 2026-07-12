@@ -75,9 +75,9 @@ export default async function DriversPage({
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <h2 className="text-xl font-bold tracking-tight text-zinc-900 font-display">Driver Registry</h2>
-          <p className="text-xs text-zinc-700 font-medium">Manage driver rosters, licensing, and safety profile scores.</p>
+          <p className="text-sm text-zinc-700 font-medium">Manage driver rosters, licensing, and safety profile scores.</p>
         </div>
-        <div className="text-xs text-zinc-700 font-medium">
+        <div className="text-sm text-zinc-700 font-medium">
           <Link href="/" className="hover:text-zinc-900 font-semibold underline">Dashboard</Link>
           <span className="mx-2 text-zinc-400">/</span>
           <span className="font-semibold text-zinc-900">Drivers</span>
@@ -88,7 +88,7 @@ export default async function DriversPage({
       {userRole === "fleet_manager" || userRole === "safety_officer" ? (
         <CreateDriverForm />
       ) : (
-        <div className="p-4 rounded-lg bg-zinc-50 border border-zinc-200 text-xs text-zinc-700 font-medium">
+        <div className="p-4 rounded-lg bg-zinc-50 border border-zinc-200 text-sm text-zinc-700 font-medium">
           <em>* Driver registration and safety roster settings are restricted to Fleet Managers or Safety Officers.</em>
         </div>
       )}
@@ -99,7 +99,7 @@ export default async function DriversPage({
         {/* Search & Filter form */}
         <form method="GET" action="/drivers" className="grid grid-cols-1 sm:grid-cols-3 gap-3 p-4 rounded-lg border border-zinc-200 bg-zinc-50 items-end">
           <div className="sm:col-span-2">
-            <label className="block text-[10px] font-bold text-zinc-700 uppercase tracking-wider mb-1">
+            <label className="block text-sm font-semibold text-zinc-700 mb-1">
               Search Name / License
             </label>
             <input
@@ -107,19 +107,19 @@ export default async function DriversPage({
               name="search"
               defaultValue={search}
               placeholder="Search driver name or license number..."
-              className="w-full rounded-md border border-zinc-200 bg-white px-3 py-1.5 text-xs text-zinc-900 placeholder-zinc-400 focus:border-zinc-900 focus:outline-none transition-colors"
+              className="w-full rounded-md border border-zinc-200 bg-white px-3 py-1.5 text-sm text-zinc-900 placeholder-zinc-400 focus:border-zinc-900 focus:outline-none transition-colors"
             />
           </div>
 
           <div className="flex gap-2">
             <div className="flex-1">
-              <label className="block text-[10px] font-bold text-zinc-700 uppercase tracking-wider mb-1">
+              <label className="block text-sm font-semibold text-zinc-700 mb-1">
                 Status
               </label>
               <select 
                 name="status" 
                 defaultValue={statusFilter}
-                className="w-full rounded-md border border-zinc-200 bg-white px-3 py-1.5 text-xs text-zinc-900 focus:border-zinc-900 focus:outline-none transition-colors"
+                className="w-full rounded-md border border-zinc-200 bg-white px-3 py-1.5 text-sm text-zinc-900 focus:border-zinc-900 focus:outline-none transition-colors"
               >
                 <option value="">All Statuses</option>
                 <option value="available">Available</option>
@@ -130,7 +130,7 @@ export default async function DriversPage({
             </div>
             <button 
               type="submit"
-              className="rounded-md bg-zinc-900 hover:bg-zinc-800 text-white px-4 py-1.5 text-xs font-semibold cursor-pointer transition-colors shadow-sm"
+              className="rounded-md bg-zinc-900 hover:bg-zinc-800 text-white px-4 py-1.5 text-sm font-semibold cursor-pointer transition-colors shadow-sm"
             >
               Apply
             </button>
@@ -142,7 +142,7 @@ export default async function DriversPage({
           <div className="text-right">
             <Link 
               href="/drivers" 
-              className="text-xs text-zinc-800 font-bold hover:underline"
+              className="text-sm text-zinc-800 font-bold hover:underline"
             >
               Reset Filters
             </Link>
@@ -151,12 +151,12 @@ export default async function DriversPage({
 
         {/* Drivers List Table */}
         {driverList.length === 0 ? (
-          <div className="text-center py-10 border border-zinc-200 rounded-lg bg-zinc-50 text-xs text-zinc-700 font-semibold">
+          <div className="text-center py-10 border border-zinc-200 rounded-lg bg-zinc-50 text-sm text-zinc-700 font-semibold">
             No drivers found matching the selected filters.
           </div>
         ) : (
           <div className="overflow-x-auto rounded-lg border border-zinc-200 bg-white shadow-sm">
-            <table className="w-full text-left text-xs border-collapse">
+            <table className="w-full text-left text-sm border-collapse">
               <thead>
                 <tr className="border-b border-zinc-200 text-zinc-500 font-bold uppercase tracking-wider bg-zinc-50/50">
                   <th className="px-6 py-3.5">Driver Name</th>

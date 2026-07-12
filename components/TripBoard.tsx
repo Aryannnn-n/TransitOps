@@ -257,7 +257,7 @@ export function TripBoard({ tripsList, userRole, availableVehicles, availableDri
           <form onSubmit={(e) => handleCompleteSubmit(e, activeTripId)} className="space-y-4">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <label className="block text-xs font-semibold text-zinc-700 mb-1">
+                <label className="block text-sm font-semibold text-zinc-700 mb-1">
                   Final Odometer Reading (km)
                 </label>
                 <input
@@ -271,7 +271,7 @@ export function TripBoard({ tripsList, userRole, availableVehicles, availableDri
                 />
               </div>
               <div>
-                <label className="block text-xs font-semibold text-zinc-700 mb-1">
+                <label className="block text-sm font-semibold text-zinc-700 mb-1">
                   Fuel Consumed (Liters)
                 </label>
                 <input
@@ -292,14 +292,14 @@ export function TripBoard({ tripsList, userRole, availableVehicles, availableDri
                   setActiveTripId(null);
                   setActionType(null);
                 }}
-                className="rounded-md border border-zinc-200 bg-white hover:bg-zinc-50 text-zinc-750 px-4 py-2 text-xs font-bold transition-colors cursor-pointer"
+                className="rounded-md border border-zinc-200 bg-white hover:bg-zinc-50 text-zinc-750 px-4 py-2 text-sm font-bold transition-colors cursor-pointer"
               >
                 Cancel
               </button>
               <button 
                 type="submit" 
                 disabled={isLoading}
-                className="rounded-md bg-zinc-900 hover:bg-zinc-800 text-white px-5 py-2 text-xs font-bold transition-colors disabled:opacity-50 cursor-pointer shadow-sm flex items-center gap-1.5"
+                className="rounded-md bg-zinc-900 hover:bg-zinc-800 text-white px-5 py-2 text-sm font-bold transition-colors disabled:opacity-50 cursor-pointer shadow-sm flex items-center gap-1.5"
               >
                 {isLoading && <Loader2 className="h-4 w-4 animate-spin" />}
                 {isLoading ? "Submitting..." : "Complete Shipment"}
@@ -321,7 +321,7 @@ export function TripBoard({ tripsList, userRole, availableVehicles, availableDri
           </div>
           <form onSubmit={(e) => handleCancelSubmit(e, activeTripId)} className="space-y-4">
             <div>
-              <label className="block text-xs font-semibold text-zinc-700 mb-1">
+              <label className="block text-sm font-semibold text-zinc-700 mb-1">
                 Reason for Cancellation
               </label>
               <input
@@ -340,14 +340,14 @@ export function TripBoard({ tripsList, userRole, availableVehicles, availableDri
                   setActiveTripId(null);
                   setActionType(null);
                 }}
-                className="rounded-md border border-zinc-200 bg-white hover:bg-zinc-50 text-zinc-750 px-4 py-2 text-xs font-bold transition-colors cursor-pointer"
+                className="rounded-md border border-zinc-200 bg-white hover:bg-zinc-50 text-zinc-750 px-4 py-2 text-sm font-bold transition-colors cursor-pointer"
               >
                 Cancel
               </button>
               <button 
                 type="submit" 
                 disabled={isLoading}
-                className="rounded-md bg-red-600 hover:bg-red-700 text-white px-5 py-2 text-xs font-bold transition-colors disabled:opacity-50 cursor-pointer shadow-sm flex items-center gap-1.5"
+                className="rounded-md bg-red-600 hover:bg-red-700 text-white px-5 py-2 text-sm font-bold transition-colors disabled:opacity-50 cursor-pointer shadow-sm flex items-center gap-1.5"
               >
                 {isLoading && <Loader2 className="h-4 w-4 animate-spin" />}
                 {isLoading ? "Submitting..." : "Confirm Cancellation"}
@@ -367,13 +367,13 @@ export function TripBoard({ tripsList, userRole, availableVehicles, availableDri
               <h3 className="text-sm font-bold tracking-tight text-zinc-900 uppercase tracking-wider">Create Trip</h3>
               
               {formError && (
-                <div className="rounded-md border border-red-200 bg-red-50 p-3 text-xs text-red-750 flex items-start gap-2.5 font-bold">
+                <div className="rounded-md border border-red-200 bg-red-50 p-3 text-sm text-red-750 flex items-start gap-2.5 font-bold">
                   <ShieldAlert className="h-4 w-4 shrink-0 mt-0.5" />
                   <span>{formError}</span>
                 </div>
               )}
               {formSuccess && (
-                <div className="rounded-md border border-emerald-200 bg-emerald-50 p-3 text-xs text-emerald-700 flex items-start gap-2.5 font-bold">
+                <div className="rounded-md border border-emerald-200 bg-emerald-50 p-3 text-sm text-emerald-700 flex items-start gap-2.5 font-bold">
                   <ShieldCheck className="h-4 w-4 shrink-0 mt-0.5" />
                   <span>Shipment draft saved!</span>
                 </div>
@@ -381,7 +381,7 @@ export function TripBoard({ tripsList, userRole, availableVehicles, availableDri
 
               {/* Exceeded Capacity Warning Box */}
               {isOverCapacity && (
-                <div className="rounded-md border border-red-200 bg-red-50 p-3 text-xs text-red-700 space-y-1 font-semibold">
+                <div className="rounded-md border border-red-200 bg-red-50 p-3 text-sm text-red-700 space-y-1 font-semibold">
                   <div>Vehicle Capacity: {vehicleCapacity} kg</div>
                   <div>Cargo Weight: {cargoWeightKg} kg</div>
                   <div className="text-red-700 font-bold flex items-center gap-1">
@@ -393,7 +393,7 @@ export function TripBoard({ tripsList, userRole, availableVehicles, availableDri
 
               <form onSubmit={handleCreateSubmit} className="space-y-4">
                 <div>
-                  <label className="block text-xs font-semibold text-zinc-700 mb-1">SOURCE</label>
+                  <label className="block text-sm font-semibold text-zinc-700 mb-1">SOURCE</label>
                   <input
                     type="text"
                     required
@@ -406,7 +406,7 @@ export function TripBoard({ tripsList, userRole, availableVehicles, availableDri
                 </div>
 
                 <div>
-                  <label className="block text-xs font-semibold text-zinc-700 mb-1">DESTINATION</label>
+                  <label className="block text-sm font-semibold text-zinc-700 mb-1">DESTINATION</label>
                   <input
                     type="text"
                     required
@@ -419,9 +419,9 @@ export function TripBoard({ tripsList, userRole, availableVehicles, availableDri
                 </div>
 
                 <div>
-                  <label className="block text-xs font-semibold text-zinc-700 mb-1">VEHICLE (AVAILABLE ONLY)</label>
+                  <label className="block text-sm font-semibold text-zinc-700 mb-1">VEHICLE (AVAILABLE ONLY)</label>
                   {availableVehicles.length === 0 ? (
-                    <div className="text-xs text-red-600 font-bold py-1">* No vehicles available for dispatch.</div>
+                    <div className="text-sm text-red-600 font-bold py-1">* No vehicles available for dispatch.</div>
                   ) : (
                     <select
                       required
@@ -441,9 +441,9 @@ export function TripBoard({ tripsList, userRole, availableVehicles, availableDri
                 </div>
 
                 <div>
-                  <label className="block text-xs font-semibold text-zinc-700 mb-1">DRIVER (AVAILABLE ONLY)</label>
+                  <label className="block text-sm font-semibold text-zinc-700 mb-1">DRIVER (AVAILABLE ONLY)</label>
                   {availableDrivers.length === 0 ? (
-                    <div className="text-xs text-red-600 font-bold py-1">* No drivers available for dispatch.</div>
+                    <div className="text-sm text-red-600 font-bold py-1">* No drivers available for dispatch.</div>
                   ) : (
                     <select
                       required
@@ -463,7 +463,7 @@ export function TripBoard({ tripsList, userRole, availableVehicles, availableDri
                 </div>
 
                 <div>
-                  <label className="block text-xs font-semibold text-zinc-700 mb-1">CARGO WEIGHT (KG)</label>
+                  <label className="block text-sm font-semibold text-zinc-700 mb-1">CARGO WEIGHT (KG)</label>
                   <input
                     type="number"
                     step="0.01"
@@ -477,7 +477,7 @@ export function TripBoard({ tripsList, userRole, availableVehicles, availableDri
                 </div>
 
                 <div>
-                  <label className="block text-xs font-semibold text-zinc-700 mb-1">PLANNED DISTANCE (KM)</label>
+                  <label className="block text-sm font-semibold text-zinc-700 mb-1">PLANNED DISTANCE (KM)</label>
                   <input
                     type="number"
                     step="0.01"
@@ -494,14 +494,14 @@ export function TripBoard({ tripsList, userRole, availableVehicles, availableDri
                   <button
                     type="button"
                     onClick={clearCreateForm}
-                    className="rounded-md border border-zinc-200 bg-white hover:bg-zinc-50 text-zinc-750 px-4 py-2 text-xs font-bold transition-colors cursor-pointer"
+                    className="rounded-md border border-zinc-200 bg-white hover:bg-zinc-50 text-zinc-750 px-4 py-2 text-sm font-bold transition-colors cursor-pointer"
                   >
                     Cancel
                   </button>
                   <button
                     type="submit"
                     disabled={isLoading || isOverCapacity || availableVehicles.length === 0 || availableDrivers.length === 0}
-                    className="rounded-md bg-zinc-900 hover:bg-zinc-800 text-white px-5 py-2.5 text-xs font-bold transition-colors disabled:opacity-50 cursor-pointer shadow-sm flex items-center gap-1.5"
+                    className="rounded-md bg-zinc-900 hover:bg-zinc-800 text-white px-5 py-2.5 text-sm font-bold transition-colors disabled:opacity-50 cursor-pointer shadow-sm flex items-center gap-1.5"
                   >
                     {isLoading && <Loader2 className="h-4 w-4 animate-spin" />}
                     Save Draft
@@ -519,7 +519,7 @@ export function TripBoard({ tripsList, userRole, availableVehicles, availableDri
           {/* Trip Lifecycle Stepper */}
           <div className="rounded-lg border border-zinc-200 bg-zinc-50 p-4 shadow-sm">
             <div className="text-[10px] font-bold text-zinc-700 uppercase tracking-wider mb-3">Trip Lifecycle</div>
-            <div className="flex items-center justify-between text-xs font-semibold text-zinc-800 px-2">
+            <div className="flex items-center justify-between text-sm font-semibold text-zinc-800 px-2">
               <div className="flex items-center gap-1.5">
                 <span className="h-2 w-2 rounded-full bg-zinc-400"></span>
                 <span>Draft</span>
@@ -543,12 +543,12 @@ export function TripBoard({ tripsList, userRole, availableVehicles, availableDri
           </div>
 
           <div className="flex items-center justify-between">
-            <h3 className="text-xs font-bold text-zinc-500 uppercase tracking-wider">Live Board</h3>
-            <span className="text-xs text-zinc-700 font-bold">{filteredTrips.length} Shipments</span>
+            <h3 className="text-sm font-bold text-zinc-500 uppercase tracking-wider">Live Board</h3>
+            <span className="text-sm text-zinc-700 font-bold">{filteredTrips.length} Shipments</span>
           </div>
 
           {filteredTrips.length === 0 ? (
-            <div className="text-center py-12 border border-zinc-200 rounded-lg bg-white text-xs text-zinc-750 font-bold">
+            <div className="text-center py-12 border border-zinc-200 rounded-lg bg-white text-sm text-zinc-750 font-bold">
               No shipments found matching the parameters.
             </div>
           ) : (
@@ -569,7 +569,7 @@ export function TripBoard({ tripsList, userRole, availableVehicles, availableDri
                   <div key={t.id} className="rounded-lg border border-zinc-200 bg-white p-4 shadow-sm hover:border-zinc-300 transition-all space-y-2">
                     
                     {/* Line 1 */}
-                    <div className="flex justify-between items-center text-xs">
+                    <div className="flex justify-between items-center text-sm">
                       <span className="font-bold text-zinc-900 font-mono">Trip #{t.tripNumber}</span>
                       <span className="text-zinc-700 font-semibold">{assignedInfo}</span>
                     </div>
@@ -620,7 +620,7 @@ export function TripBoard({ tripsList, userRole, availableVehicles, availableDri
                         )}
                       </div>
 
-                      <div className="text-xs text-zinc-700 font-medium">
+                      <div className="text-sm text-zinc-700 font-medium">
                         {t.status === "completed" ? (
                           <span>Odo: {t.finalOdometerKm} km | {t.fuelConsumedLiters} L</span>
                         ) : t.status === "cancelled" ? (

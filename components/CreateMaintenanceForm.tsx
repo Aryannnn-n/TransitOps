@@ -72,13 +72,13 @@ export function CreateMaintenanceForm({ vehiclesList }: CreateMaintenanceFormPro
       <h3 className="text-sm font-bold tracking-tight text-zinc-900 uppercase tracking-wider mb-4">Log Service Record</h3>
       
       {error && (
-        <div className="mb-4 rounded-md border border-red-200 bg-red-50 p-3 text-xs text-red-750 flex items-start gap-2.5 font-bold">
+        <div className="mb-4 rounded-md border border-red-200 bg-red-50 p-3 text-sm text-red-750 flex items-start gap-2.5 font-bold">
           <ShieldAlert className="h-4 w-4 shrink-0 mt-0.5" />
           <span>{error}</span>
         </div>
       )}
       {success && (
-        <div className="mb-4 rounded-md border border-emerald-200 bg-emerald-50 p-3 text-xs text-emerald-700 flex items-start gap-2.5 font-bold">
+        <div className="mb-4 rounded-md border border-emerald-200 bg-emerald-50 p-3 text-sm text-emerald-700 flex items-start gap-2.5 font-bold">
           <ShieldCheck className="h-4 w-4 shrink-0 mt-0.5" />
           <span>Maintenance log created successfully!</span>
         </div>
@@ -88,11 +88,11 @@ export function CreateMaintenanceForm({ vehiclesList }: CreateMaintenanceFormPro
         <div className="space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div>
-              <label className="block text-xs font-bold text-zinc-800 uppercase tracking-wider mb-1">
+              <label className="block text-sm font-semibold text-zinc-700 mb-1">
                 Select Vehicle
               </label>
               {activeVehicles.length === 0 ? (
-                <div className="text-xs text-red-600 font-bold py-1">* No active vehicles available for maintenance.</div>
+                <div className="text-sm text-red-600 font-bold py-1">* No active vehicles available for maintenance.</div>
               ) : (
                 <select 
                   required 
@@ -109,14 +109,14 @@ export function CreateMaintenanceForm({ vehiclesList }: CreateMaintenanceFormPro
                 </select>
               )}
               {fieldErrors.vehicleId && (
-                <span className="text-xs text-red-700 mt-1 block font-bold">
+                <span className="text-sm text-red-700 mt-1 block font-bold">
                   {fieldErrors.vehicleId.join(", ")}
                 </span>
               )}
             </div>
 
             <div>
-              <label className="block text-xs font-bold text-zinc-800 uppercase tracking-wider mb-1">
+              <label className="block text-sm font-semibold text-zinc-700 mb-1">
                 Service Type / Maintenance Type
               </label>
               <input
@@ -128,14 +128,14 @@ export function CreateMaintenanceForm({ vehiclesList }: CreateMaintenanceFormPro
                 className="w-full rounded-md border border-zinc-200 bg-white px-3 py-2 text-sm text-zinc-900 placeholder-zinc-400 focus:border-zinc-900 focus:outline-none transition-colors"
               />
               {fieldErrors.serviceType && (
-                <span className="text-xs text-red-700 mt-1 block font-bold">
+                <span className="text-sm text-red-700 mt-1 block font-bold">
                   {fieldErrors.serviceType.join(", ")}
                 </span>
               )}
             </div>
 
             <div>
-              <label className="block text-xs font-bold text-zinc-800 uppercase tracking-wider mb-1">
+              <label className="block text-sm font-semibold text-zinc-700 mb-1">
                 Cost (INR)
               </label>
               <input
@@ -148,7 +148,7 @@ export function CreateMaintenanceForm({ vehiclesList }: CreateMaintenanceFormPro
                 className="w-full rounded-md border border-zinc-200 bg-white px-3 py-2 text-sm text-zinc-900 placeholder-zinc-400 focus:border-zinc-900 focus:outline-none transition-colors"
               />
               {fieldErrors.cost && (
-                <span className="text-xs text-red-700 mt-1 block font-bold">
+                <span className="text-sm text-red-700 mt-1 block font-bold">
                   {fieldErrors.cost.join(", ")}
                 </span>
               )}
@@ -156,7 +156,7 @@ export function CreateMaintenanceForm({ vehiclesList }: CreateMaintenanceFormPro
           </div>
 
           <div>
-            <label className="block text-xs font-bold text-zinc-800 uppercase tracking-wider mb-1">
+            <label className="block text-sm font-semibold text-zinc-700 mb-1">
               Diagnostic Notes / Instructions
             </label>
             <textarea
@@ -166,7 +166,7 @@ export function CreateMaintenanceForm({ vehiclesList }: CreateMaintenanceFormPro
               className="w-full rounded-md border border-zinc-200 bg-white px-3 py-2 text-sm text-zinc-900 placeholder-zinc-400 focus:border-zinc-900 focus:outline-none transition-colors h-24 resize-none"
             />
             {fieldErrors.notes && (
-              <span className="text-xs text-red-700 mt-1 block font-bold">
+              <span className="text-sm text-red-700 mt-1 block font-bold">
                 {fieldErrors.notes.join(", ")}
               </span>
             )}

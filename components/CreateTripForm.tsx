@@ -110,19 +110,19 @@ export function CreateTripForm({ vehiclesList, driversList }: CreateTripFormProp
       <h3 className="text-sm font-bold tracking-tight text-zinc-900 uppercase tracking-wider mb-4">Create Trip (Save Draft)</h3>
       
       {error && (
-        <div className="mb-4 rounded-md border border-red-200 bg-red-50 p-3 text-xs text-red-700 flex items-start gap-2.5">
+        <div className="mb-4 rounded-md border border-red-200 bg-red-50 p-3 text-sm text-red-700 flex items-start gap-2.5">
           <ShieldAlert className="h-4 w-4 shrink-0 mt-0.5" />
           <span>{error}</span>
         </div>
       )}
       {success && (
-        <div className="mb-4 rounded-md border border-emerald-200 bg-emerald-50 p-3 text-xs text-emerald-700 flex items-start gap-2.5">
+        <div className="mb-4 rounded-md border border-emerald-200 bg-emerald-50 p-3 text-sm text-emerald-700 flex items-start gap-2.5">
           <ShieldCheck className="h-4 w-4 shrink-0 mt-0.5" />
           <span>Trip draft saved successfully!</span>
         </div>
       )}
       {capacityWarning && (
-        <div className="mb-4 rounded-md border border-amber-200 bg-amber-50 p-3 text-xs text-amber-800 flex items-start gap-2.5 font-semibold">
+        <div className="mb-4 rounded-md border border-amber-200 bg-amber-50 p-3 text-sm text-amber-800 flex items-start gap-2.5 font-semibold">
           <ShieldAlert className="h-4 w-4 shrink-0 mt-0.5 text-amber-700" />
           <span>{capacityWarning}</span>
         </div>
@@ -131,7 +131,7 @@ export function CreateTripForm({ vehiclesList, driversList }: CreateTripFormProp
       <form onSubmit={handleSubmit} className="space-y-4">
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
           <div>
-            <label className="block text-xs font-semibold text-zinc-700 mb-1">
+            <label className="block text-sm font-semibold text-zinc-700 mb-1">
               Source Location
             </label>
             <input
@@ -143,14 +143,14 @@ export function CreateTripForm({ vehiclesList, driversList }: CreateTripFormProp
               className="w-full rounded-md border border-zinc-200 bg-white px-3 py-2 text-sm text-zinc-900 placeholder-zinc-400 focus:border-zinc-900 focus:outline-none transition-colors"
             />
             {fieldErrors.source && (
-              <span className="text-xs text-red-650 mt-1 block">
+              <span className="text-sm text-red-650 mt-1 block">
                 {fieldErrors.source.join(", ")}
               </span>
             )}
           </div>
 
           <div>
-            <label className="block text-xs font-semibold text-zinc-700 mb-1">
+            <label className="block text-sm font-semibold text-zinc-700 mb-1">
               Destination Location
             </label>
             <input
@@ -162,14 +162,14 @@ export function CreateTripForm({ vehiclesList, driversList }: CreateTripFormProp
               className="w-full rounded-md border border-zinc-200 bg-white px-3 py-2 text-sm text-zinc-900 placeholder-zinc-400 focus:border-zinc-900 focus:outline-none transition-colors"
             />
             {fieldErrors.destination && (
-              <span className="text-xs text-red-650 mt-1 block">
+              <span className="text-sm text-red-650 mt-1 block">
                 {fieldErrors.destination.join(", ")}
               </span>
             )}
           </div>
 
           <div>
-            <label className="block text-xs font-semibold text-zinc-700 mb-1">
+            <label className="block text-sm font-semibold text-zinc-700 mb-1">
               Cargo Weight (kg)
             </label>
             <input
@@ -182,14 +182,14 @@ export function CreateTripForm({ vehiclesList, driversList }: CreateTripFormProp
               className="w-full rounded-md border border-zinc-200 bg-white px-3 py-2 text-sm text-zinc-900 placeholder-zinc-400 focus:border-zinc-900 focus:outline-none transition-colors"
             />
             {fieldErrors.cargoWeightKg && (
-              <span className="text-xs text-red-650 mt-1 block">
+              <span className="text-sm text-red-650 mt-1 block">
                 {fieldErrors.cargoWeightKg.join(", ")}
               </span>
             )}
           </div>
 
           <div>
-            <label className="block text-xs font-semibold text-zinc-700 mb-1">
+            <label className="block text-sm font-semibold text-zinc-700 mb-1">
               Planned Distance (km)
             </label>
             <input
@@ -202,18 +202,18 @@ export function CreateTripForm({ vehiclesList, driversList }: CreateTripFormProp
               className="w-full rounded-md border border-zinc-200 bg-white px-3 py-2 text-sm text-zinc-900 placeholder-zinc-400 focus:border-zinc-900 focus:outline-none transition-colors"
             />
             {fieldErrors.plannedDistanceKm && (
-              <span className="text-xs text-red-650 mt-1 block">
+              <span className="text-sm text-red-650 mt-1 block">
                 {fieldErrors.plannedDistanceKm.join(", ")}
               </span>
             )}
           </div>
 
           <div>
-            <label className="block text-xs font-semibold text-zinc-700 mb-1">
+            <label className="block text-sm font-semibold text-zinc-700 mb-1">
               Assign Vehicle (Available Only)
             </label>
             {vehiclesList.length === 0 ? (
-              <div className="text-xs text-red-600 font-semibold py-2">No vehicles available in dispatch pool.</div>
+              <div className="text-sm text-red-600 font-semibold py-2">No vehicles available in dispatch pool.</div>
             ) : (
               <select 
                 required 
@@ -230,18 +230,18 @@ export function CreateTripForm({ vehiclesList, driversList }: CreateTripFormProp
               </select>
             )}
             {fieldErrors.vehicleId && (
-              <span className="text-xs text-red-650 mt-1 block">
+              <span className="text-sm text-red-650 mt-1 block">
                 {fieldErrors.vehicleId.join(", ")}
               </span>
             )}
           </div>
 
           <div>
-            <label className="block text-xs font-semibold text-zinc-700 mb-1">
+            <label className="block text-sm font-semibold text-zinc-700 mb-1">
               Assign Driver (Available Only)
             </label>
             {driversList.length === 0 ? (
-              <div className="text-xs text-red-600 font-semibold py-2">No drivers available in dispatch pool.</div>
+              <div className="text-sm text-red-600 font-semibold py-2">No drivers available in dispatch pool.</div>
             ) : (
               <select 
                 required 
@@ -258,7 +258,7 @@ export function CreateTripForm({ vehiclesList, driversList }: CreateTripFormProp
               </select>
             )}
             {fieldErrors.driverId && (
-              <span className="text-xs text-red-650 mt-1 block">
+              <span className="text-sm text-red-650 mt-1 block">
                 {fieldErrors.driverId.join(", ")}
               </span>
             )}

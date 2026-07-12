@@ -92,7 +92,7 @@ export default function LoginPage() {
           </div>
           <div>
             <h1 className="text-xl font-bold tracking-tight text-zinc-900 font-display">TransitOps</h1>
-            <p className="text-xs text-zinc-700 font-medium">Smart Transport Operations Platform</p>
+            <p className="text-sm text-zinc-700 font-medium">Smart Transport Operations Platform</p>
           </div>
         </div>
 
@@ -108,7 +108,7 @@ export default function LoginPage() {
         </div>
 
         {/* Bottom Left: Copyright */}
-        <div className="text-xs text-zinc-500 font-medium">
+        <div className="text-sm text-zinc-500 font-medium">
           &copy; TransitOps
         </div>
       </section>
@@ -123,11 +123,11 @@ export default function LoginPage() {
             {/* Header */}
             <div className="flex flex-col mb-6">
               <h2 className="text-2xl font-bold tracking-tight text-zinc-900 font-display">Sign in to your account</h2>
-              <p className="text-xs text-zinc-650 mt-1 font-medium">Enter your credentials to access the platform</p>
+              <p className="text-sm text-zinc-650 mt-1 font-medium">Enter your credentials to access the platform</p>
             </div>
 
             {error && (
-              <div className="mb-4 rounded-md border border-red-200 bg-red-50 p-3 text-xs text-red-700 flex items-start gap-2.5">
+              <div className="mb-4 rounded-md border border-red-200 bg-red-50 p-3 text-sm text-red-700 flex items-start gap-2.5">
                 <ShieldAlert className="h-4 w-4 shrink-0 mt-0.5" />
                 <span>{error}</span>
               </div>
@@ -138,7 +138,7 @@ export default function LoginPage() {
               
               {/* Email */}
               <div className="space-y-1.5">
-                <label className="block text-xs font-semibold text-zinc-700">Email Address</label>
+                <label className="block text-sm font-semibold text-zinc-700">Email Address</label>
                 <div className="relative">
                   <Mail className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-zinc-400" />
                   <input
@@ -154,7 +154,7 @@ export default function LoginPage() {
 
               {/* Password */}
               <div className="space-y-1.5">
-                <label className="block text-xs font-semibold text-zinc-700">Password</label>
+                <label className="block text-sm font-semibold text-zinc-700">Password</label>
                 <div className="relative">
                   <Lock className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-zinc-400" />
                   <input
@@ -177,7 +177,7 @@ export default function LoginPage() {
 
               {/* Role Dropdown */}
               <div className="space-y-1.5">
-                <label className="block text-xs font-semibold text-zinc-700">Role</label>
+                <label className="block text-sm font-semibold text-zinc-700">Role</label>
                 <select
                   value={role}
                   onChange={(e) => setRole(e.target.value)}
@@ -192,7 +192,7 @@ export default function LoginPage() {
 
               {/* Remember me & Forgot Password */}
               <div className="flex items-center justify-between pt-1">
-                <label className="flex items-center gap-2 text-xs text-zinc-600 font-semibold cursor-pointer select-none">
+                <label className="flex items-center gap-2 text-sm text-zinc-600 font-semibold cursor-pointer select-none">
                   <input
                     type="checkbox"
                     checked={rememberMe}
@@ -201,7 +201,7 @@ export default function LoginPage() {
                   />
                   <span>Remember me</span>
                 </label>
-                {/* <Link href="#" className="text-xs text-zinc-700 hover:text-zinc-900 font-semibold underline">
+                {/* <Link href="#" className="text-sm text-zinc-700 hover:text-zinc-900 font-semibold underline">
                   Forgot Password?
                 </Link> */}
               </div>
@@ -223,7 +223,7 @@ export default function LoginPage() {
 
             </form>
 
-            <div className="mt-4 text-center text-xs text-zinc-600 font-medium">
+            <div className="mt-4 text-center text-sm text-zinc-600 font-medium">
               Don't have an account?{" "}
               <Link href="/signup" className="text-zinc-900 font-bold hover:underline">
                 Sign Up

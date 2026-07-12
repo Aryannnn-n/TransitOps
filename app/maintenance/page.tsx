@@ -50,9 +50,9 @@ export default async function MaintenancePage() {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <h2 className="text-xl font-bold tracking-tight text-zinc-900 font-display">Maintenance & Workshop</h2>
-          <p className="text-xs text-zinc-700 font-medium">Log service events, track repair costs, and transition vehicles to/from the shop.</p>
+          <p className="text-sm text-zinc-700 font-medium">Log service events, track repair costs, and transition vehicles to/from the shop.</p>
         </div>
-        <div className="text-xs text-zinc-700 font-medium">
+        <div className="text-sm text-zinc-700 font-medium">
           <Link href="/" className="hover:text-zinc-900 font-semibold underline">Dashboard</Link>
           <span className="mx-2 text-zinc-400">/</span>
           <span className="font-semibold text-zinc-900">Maintenance</span>
@@ -61,11 +61,11 @@ export default async function MaintenancePage() {
 
       {/* Form at the top */}
       <div className="space-y-4">
-        <div className="text-xs font-bold text-zinc-500 uppercase tracking-wider">Log Service Record</div>
+        <div className="text-sm font-bold text-zinc-500 uppercase tracking-wider">Log Service Record</div>
         {isManager ? (
           <CreateMaintenanceForm vehiclesList={vehiclesList} />
         ) : (
-          <div className="p-4 rounded-lg bg-zinc-50 border border-zinc-200 text-xs text-zinc-800 font-bold">
+          <div className="p-4 rounded-lg bg-zinc-50 border border-zinc-200 text-sm text-zinc-800 font-bold">
             <em>* Creating and scheduling maintenance tickets is restricted to Fleet Managers.</em>
           </div>
         )}
@@ -73,9 +73,9 @@ export default async function MaintenancePage() {
 
       {/* List at the bottom */}
       <div className="space-y-4 pt-4 border-t border-zinc-200">
-        <div className="text-xs font-bold text-zinc-500 uppercase tracking-wider">Service Log</div>
+        <div className="text-sm font-bold text-zinc-500 uppercase tracking-wider">Service Log</div>
         {rows.length === 0 ? (
-          <div className="text-center py-10 border border-zinc-200 rounded-lg bg-zinc-50 text-xs text-zinc-800 font-bold">
+          <div className="text-center py-10 border border-zinc-200 rounded-lg bg-zinc-50 text-sm text-zinc-800 font-bold">
             No maintenance logs or active shop tickets found.
           </div>
         ) : (

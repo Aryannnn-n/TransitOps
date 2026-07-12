@@ -47,17 +47,17 @@ export function Sidebar() {
         
         {/* Logo/Brand header */}
         <div className="flex items-center gap-2.5 px-2 py-1">
-          <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-zinc-900 text-white">
+          <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-zinc-900 text-white">
             <ShieldCheck className="h-5 w-5" />
           </div>
           <div>
-            <h1 className="text-sm font-bold tracking-tight text-zinc-900 font-display">TransitOps</h1>
-            <p className="text-[10px] text-zinc-400 uppercase tracking-widest font-semibold">Fleet Logi-SaaS</p>
+            <h1 className="text-base font-bold tracking-tight text-zinc-900 font-display">TransitOps</h1>
+            <p className="text-sm text-zinc-500 uppercase tracking-wider font-bold">Fleet Logi-SaaS</p>
           </div>
         </div>
 
         {/* Navigation list */}
-        <nav className="space-y-1">
+        <nav className="space-y-1.5">
           {navItems.map((item) => {
             const Icon = item.icon;
             // Check if active: exact match or start match (except for dashboard '/')
@@ -69,13 +69,13 @@ export function Sidebar() {
               <Link
                 key={item.href}
                 href={item.href}
-                className={`flex items-center gap-3 px-3 py-2 text-xs font-semibold rounded-md transition-all duration-150 ${
+                className={`flex items-center gap-3 px-3 py-2.5 text-sm font-bold rounded-md transition-all duration-150 ${
                   isActive
                     ? "bg-zinc-100 text-zinc-900"
-                    : "text-zinc-600 hover:text-zinc-900 hover:bg-zinc-50"
+                    : "text-zinc-700 hover:text-zinc-900 hover:bg-zinc-50"
                 }`}
               >
-                <Icon className={`h-4 w-4 shrink-0 ${isActive ? 'text-zinc-900' : 'text-zinc-400'}`} />
+                <Icon className={`h-4.5 w-4.5 shrink-0 ${isActive ? 'text-zinc-900' : 'text-zinc-500'}`} />
                 <span>{item.label}</span>
               </Link>
             );
@@ -85,18 +85,18 @@ export function Sidebar() {
 
       {/* User profile / session block */}
       <div className="border-t border-zinc-200 pt-4 space-y-3">
-        <div className="px-2">
-          <div className="text-xs font-bold text-zinc-800 truncate">{user.name}</div>
-          <div className="text-[10px] text-zinc-500 truncate mb-1.5">{user.email}</div>
-          <span className="inline-flex items-center rounded bg-zinc-100 px-2 py-0.5 text-[10px] font-semibold text-zinc-800 border border-zinc-200 capitalize">
+        <div className="px-2 space-y-1">
+          <div className="text-sm font-bold text-zinc-900 truncate">{user.name}</div>
+          <div className="text-sm text-zinc-600 truncate mb-1.5 font-medium">{user.email}</div>
+          <span className="inline-flex items-center rounded bg-zinc-100 px-2 py-1 text-sm font-bold text-zinc-800 border border-zinc-200 capitalize">
             {user.role.replace("_", " ")}
           </span>
         </div>
         <button
           onClick={handleLogout}
-          className="w-full flex items-center justify-center gap-2 px-3 py-2 text-xs font-semibold text-zinc-600 hover:text-zinc-900 bg-zinc-50 hover:bg-zinc-100 border border-zinc-200 rounded-md transition-all cursor-pointer"
+          className="w-full flex items-center justify-center gap-2 px-3 py-2.5 text-sm font-bold text-zinc-700 hover:text-zinc-900 bg-zinc-50 hover:bg-zinc-100 border border-zinc-200 rounded-md transition-all cursor-pointer"
         >
-          <LogOut className="h-3.5 w-3.5" />
+          <LogOut className="h-4 w-4" />
           Sign Out
         </button>
       </div>

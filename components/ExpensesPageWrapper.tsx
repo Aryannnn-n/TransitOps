@@ -75,7 +75,7 @@ export function ExpensesPageWrapper({
                 setShowFuelForm(!showFuelForm);
                 setShowExpenseForm(false);
               }}
-              className="rounded-md bg-zinc-900 hover:bg-zinc-800 text-white px-4 py-2 text-xs font-bold transition-colors cursor-pointer shadow-sm flex items-center gap-1.5"
+              className="rounded-md bg-zinc-900 hover:bg-zinc-800 text-white px-4 py-2 text-sm font-bold transition-colors cursor-pointer shadow-sm flex items-center gap-1.5"
             >
               {showFuelForm ? <X className="h-3.5 w-3.5" /> : <Plus className="h-3.5 w-3.5" />}
               <span>{showFuelForm ? "Close Form" : "Log Fuel"}</span>
@@ -85,14 +85,14 @@ export function ExpensesPageWrapper({
                 setShowExpenseForm(!showExpenseForm);
                 setShowFuelForm(false);
               }}
-              className="rounded-md bg-zinc-900 hover:bg-zinc-800 text-white px-4 py-2 text-xs font-bold transition-colors cursor-pointer shadow-sm flex items-center gap-1.5"
+              className="rounded-md bg-zinc-900 hover:bg-zinc-800 text-white px-4 py-2 text-sm font-bold transition-colors cursor-pointer shadow-sm flex items-center gap-1.5"
             >
               {showExpenseForm ? <X className="h-3.5 w-3.5" /> : <Plus className="h-3.5 w-3.5" />}
               <span>{showExpenseForm ? "Close Form" : "Add Expense"}</span>
             </button>
           </>
         ) : (
-          <div className="text-xs text-zinc-700 font-semibold bg-zinc-150 px-3 py-1.5 rounded border border-zinc-200">
+          <div className="text-sm text-zinc-700 font-semibold bg-zinc-150 px-3 py-1.5 rounded border border-zinc-200">
             * Fuel log entries and trip expense records are restricted to Financial Analysts.
           </div>
         )}
@@ -128,14 +128,14 @@ export function ExpensesPageWrapper({
         
         {/* Table 1: FUEL LOGS */}
         <div className="space-y-3">
-          <h3 className="text-xs font-bold text-zinc-500 uppercase tracking-wider">Fuel Logs</h3>
+          <h3 className="text-sm font-bold text-zinc-500 uppercase tracking-wider">Fuel Logs</h3>
           {fuelList.length === 0 ? (
-            <div className="text-center py-8 border border-zinc-200 rounded-lg bg-zinc-50 text-xs text-zinc-700 font-semibold">
+            <div className="text-center py-8 border border-zinc-200 rounded-lg bg-zinc-50 text-sm text-zinc-700 font-semibold">
               No fuel purchase logs found.
             </div>
           ) : (
             <div className="overflow-x-auto rounded-lg border border-zinc-200 bg-white shadow-sm">
-              <table className="w-full text-left text-xs border-collapse">
+              <table className="w-full text-left text-sm border-collapse">
                 <thead>
                   <tr className="border-b border-zinc-200 text-zinc-500 font-bold uppercase tracking-wider bg-zinc-50/50">
                     <th className="px-6 py-3.5">Vehicle Reg</th>
@@ -165,14 +165,14 @@ export function ExpensesPageWrapper({
 
         {/* Table 2: OTHER EXPENSES */}
         <div className="space-y-3">
-          <h3 className="text-xs font-bold text-zinc-500 uppercase tracking-wider">Other Expenses (Toll / Misc)</h3>
+          <h3 className="text-sm font-bold text-zinc-500 uppercase tracking-wider">Other Expenses (Toll / Misc)</h3>
           {expensesList.length === 0 ? (
-            <div className="text-center py-8 border border-zinc-200 rounded-lg bg-zinc-50 text-xs text-zinc-700 font-semibold">
+            <div className="text-center py-8 border border-zinc-200 rounded-lg bg-zinc-50 text-sm text-zinc-700 font-semibold">
               No trip expenses recorded.
             </div>
           ) : (
             <div className="overflow-x-auto rounded-lg border border-zinc-200 bg-white shadow-sm">
-              <table className="w-full text-left text-xs border-collapse">
+              <table className="w-full text-left text-sm border-collapse">
                 <thead>
                   <tr className="border-b border-zinc-200 text-zinc-500 font-bold uppercase tracking-wider bg-zinc-50/50">
                     <th className="px-6 py-3.5">Vehicle Reg</th>
@@ -213,17 +213,17 @@ export function ExpensesPageWrapper({
         
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
           <div className="rounded-lg border border-zinc-200 bg-white p-5 shadow-sm space-y-1">
-            <div className="text-xs font-bold text-zinc-500 uppercase tracking-wider">Total Fuel cost</div>
+            <div className="text-sm font-bold text-zinc-500 uppercase tracking-wider">Total Fuel cost</div>
             <div className="text-xl font-bold text-zinc-900">INR {totals.totalFuelCost.toLocaleString()}</div>
           </div>
           <div className="rounded-lg border border-zinc-200 bg-white p-5 shadow-sm space-y-1">
-            <div className="text-xs font-bold text-zinc-500 uppercase tracking-wider">Total Maintenance cost</div>
+            <div className="text-sm font-bold text-zinc-500 uppercase tracking-wider">Total Maintenance cost</div>
             <div className="text-xl font-bold text-zinc-900">INR {totals.totalMaintenanceCost.toLocaleString()}</div>
           </div>
           <div className="rounded-lg border border-zinc-900 bg-white p-5 shadow-sm space-y-1 relative overflow-hidden">
             <div className="absolute top-0 left-0 bottom-0 w-1.5 bg-zinc-900"></div>
             <div className="pl-2 space-y-1">
-              <div className="text-xs font-bold text-zinc-900 uppercase tracking-wider">Total Operational Cost (Auto)</div>
+              <div className="text-sm font-bold text-zinc-900 uppercase tracking-wider">Total Operational Cost (Auto)</div>
               <div className="text-xl font-bold text-zinc-900 font-display">INR {totals.operationalCost.toLocaleString()}</div>
               <div className="text-[10px] text-zinc-700 font-semibold">* Calculation: Fuel + Maintenance ONLY</div>
             </div>

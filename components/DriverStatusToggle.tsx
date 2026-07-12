@@ -44,7 +44,7 @@ export function DriverStatusToggle({ driverId, currentStatus, isAllowed }: Drive
     if (currentStatus === "suspended") badgeStyle = "bg-red-50 text-red-800 border-red-200";
 
     return (
-      <span className={`inline-flex items-center rounded-md px-2 py-0.5 text-xs font-bold border capitalize ${badgeStyle}`}>
+      <span className={`inline-flex items-center rounded-md px-2 py-0.5 text-sm font-bold border capitalize ${badgeStyle}`}>
         {currentStatus.replace("_", " ")}
       </span>
     );
@@ -57,7 +57,7 @@ export function DriverStatusToggle({ driverId, currentStatus, isAllowed }: Drive
         value={status}
         disabled={isLoading}
         onChange={(e) => handleStatusChange(e.target.value as any)}
-        className="rounded-md border border-zinc-200 bg-white px-2 py-1 text-xs text-zinc-900 font-semibold focus:border-zinc-900 focus:outline-none transition-colors"
+        className="rounded-md border border-zinc-200 bg-white px-2 py-1 text-sm text-zinc-900 font-semibold focus:border-zinc-900 focus:outline-none transition-colors"
       >
         <option value="available">Available</option>
         <option value="off_duty">Off Duty</option>
