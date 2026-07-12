@@ -1,8 +1,8 @@
 import { getServerSession } from "@/lib/session";
-import { redirect } from "next/navigation";
 import { db } from "@/lib/db";
 import { vehicles, drivers, trips, fuelLogs } from "@/lib/schema";
 import { DashboardFilters } from "@/components/DashboardFilters";
+import { LandingPage } from "@/components/LandingPage";
 
 interface PageProps {
   searchParams: Promise<{ type?: string; status?: string; region?: string }>;
@@ -12,7 +12,7 @@ export default async function Home({ searchParams }: PageProps) {
   const session = await getServerSession();
 
   if (!session) {
-    redirect("/login");
+    return <LandingPage />;
   }
 
   const params = await searchParams;

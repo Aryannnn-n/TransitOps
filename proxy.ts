@@ -10,6 +10,7 @@ export function proxy(request: NextRequest) {
 
   // 1. Allow public routes, auth APIs, and static assets without redirection
   if (
+    pathname === "/" ||
     pathname.startsWith("/login") ||
     pathname.startsWith("/signup") ||
     pathname.startsWith("/api/auth") ||
